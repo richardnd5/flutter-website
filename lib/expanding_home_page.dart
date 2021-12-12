@@ -37,7 +37,7 @@ class _ExpandingHomePageState extends State<ExpandingHomePage> {
         color: color,
         shrinkFinished: destroyWidget,
         startOffset: details.globalPosition,
-        // child: MusicPage2(),
+        child: MusicPage2(),
       );
     });
   }

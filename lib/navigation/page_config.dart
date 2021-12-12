@@ -14,9 +14,16 @@ const homePageConfig = PageConfig(
 const musicPageConfig = PageConfig(
   '/music',
   FadePage(
-      // child: MusicPage2(),
-      // key: ValueKey('musicPage'),
-      ),
+    child: MusicPage2(),
+    key: ValueKey('musicPage'),
+  ),
+);
+const codingPageConfig = PageConfig(
+  '/coding',
+  FadePage(
+    child: Text('Coding'),
+    key: ValueKey('musicPage'),
+  ),
 );
 PageConfig unknown(String path) => PageConfig(
       path,

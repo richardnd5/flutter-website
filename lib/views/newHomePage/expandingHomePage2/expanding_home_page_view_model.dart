@@ -96,7 +96,7 @@ extension PageTypeExtension on PageType {
       case PageType.about:
         return AboutPage();
       case PageType.music:
-      // return MusicPage2();
+        return MusicPage2();
       case PageType.coding:
         return CodingPage();
       case PageType.contact:

@@ -8,10 +8,17 @@ import '../expanding_home_page.dart';
 
 class NavState extends ChangeNotifier {
   List<PageConfig> get configList => _configList;
-  List<PageConfig> _configList = [homePageConfig];
+  List<PageConfig> _configList = [];
 
-  PageConfig get currentConfig => _configList.last;
+  // PageConfig get currentConfig => _configList.last;
   PageConfig _currentConfig = homePageConfig;
+  PageConfig get currentConfig => _currentConfig;
+
+  GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+  NavState() {
+    _configList.add(homePageConfig);
+  }
 
   set currentConfig(PageConfig config) {
     // print('setting current config');
@@ -21,8 +28,8 @@ class NavState extends ChangeNotifier {
 
   addPage(PageConfig config) {
     // print('add page');
-    _configList.add(config);
-    _currentConfig = _configList.last;
+    // _configList.add(config);
+    _currentConfig = config;
 
     notifyListeners();
   }
@@ -45,6 +52,7 @@ class NavState extends ChangeNotifier {
   }
 
   List<Page> getPageStack() {
+    return [_currentConfig.page];
     // print('page stack called');
     return configList.map((e) => e.page).toList();
   }

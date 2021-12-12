@@ -13,7 +13,7 @@ class AppNavigationDelegate extends RouterDelegate<PageConfig>
   NavState navState;
 
   @override
-  GlobalKey<NavigatorState> get navigatorKey => navigationKey;
+  GlobalKey<NavigatorState> get navigatorKey => navState.navigatorKey;
 
   AppNavigationDelegate({required this.navState}) {
     navState.addListener(() {
@@ -24,8 +24,9 @@ class AppNavigationDelegate extends RouterDelegate<PageConfig>
 
   @override
   PageConfig get currentConfiguration {
-    // print('getting current config from delegate');
-    return navState.configList.last;
+    print('getting current config from delegate');
+    // return navState.configList.last;
+    return navState.currentConfig;
   }
 
   @override
@@ -33,7 +34,7 @@ class AppNavigationDelegate extends RouterDelegate<PageConfig>
     var nav = context.watch<NavState>();
     // print('delegate build called');
     return Navigator(
-      key: navigatorKey,
+      key: nav.navigatorKey,
       pages: nav.getPageStack(),
       onPopPage: (route, result) {
         // print('on pop page');
@@ -45,9 +46,10 @@ class AppNavigationDelegate extends RouterDelegate<PageConfig>
 
   @override
   Future<void> setNewRoutePath(PageConfig config) async {
-    // print('set new route path ${config.path}');
-    navState.configList.clear();
-    navState.addPage(config);
+    print('set new route path ${config.path}');
+    // navState.configList.clear();
+    // navState.addPage(config);
+    // navState.currentConfig = config;
     navState.currentConfig = config;
     notifyListeners();
   }

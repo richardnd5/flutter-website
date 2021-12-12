@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_website/navigation/nav_state.dart';
+import 'package:flutter_website/navigation/page_config.dart';
+import 'package:flutter_website/views/fade_page.dart';
 import 'package:flutter_website/views/newHomePage/expandingHomePage2/expanding_page_container.dart';
+import 'package:provider/provider.dart';
 import 'expanding_home_page_view_model.dart';
 
 class ExpandingHomePage2 extends StatefulWidget {
@@ -20,6 +24,20 @@ class _ExpandingHomePage2State extends State<ExpandingHomePage2> {
 
   bool isAnimating = false;
 
+  addPageToStack(BuildContext context, Color color) {
+    Provider.of<NavState>(context, listen: false).addPage(
+      PageConfig(
+        '/coding',
+        FadePage(
+          child: Scaffold(
+            body: Container(color: color),
+          ),
+          // key: ValueKey('codingPage'),
+        ),
+      ),
+    );
+  }
+
   _handleSquareTap(
     BuildContext context,
     PageType type,
@@ -37,6 +55,10 @@ class _ExpandingHomePage2State extends State<ExpandingHomePage2> {
           startOffset: getPos(type.index),
           startSize: Size(size.width / 2, size.height / 2),
           shrinkFinished: _whenShrinkAnimFinished,
+          animateFinished: () => addPageToStack(
+            context,
+            type.getPageColor(),
+          ),
           color: type.getPageColor(),
           width: size.width,
         );

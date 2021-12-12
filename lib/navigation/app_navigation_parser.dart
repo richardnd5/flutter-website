@@ -6,7 +6,7 @@ class AppNavigationParser extends RouteInformationParser<PageConfig> {
   Future<PageConfig> parseRouteInformation(
       RouteInformation routeInformation) async {
     var uri = Uri.parse(routeInformation.location!);
-    // print('parse route information');
+    print('parse route information');
 
     if (uri.pathSegments.length == 0) {
       // print('returns no path segments');
@@ -23,6 +23,7 @@ class AppNavigationParser extends RouteInformationParser<PageConfig> {
 
   @override
   RouteInformation? restoreRouteInformation(PageConfig config) {
+    print('restore route information ${config.path}');
     return RouteInformation(location: config.path);
   }
 }

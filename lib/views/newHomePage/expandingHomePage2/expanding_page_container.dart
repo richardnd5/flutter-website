@@ -7,6 +7,7 @@ class ExpandingPageContainer extends StatefulWidget {
     this.startSize = const Size(0, 0),
     this.child,
     required this.shrinkFinished,
+    required this.animateFinished,
     required this.color,
     required this.width,
   }) : super(key: key);
@@ -15,6 +16,7 @@ class ExpandingPageContainer extends StatefulWidget {
   final Size startSize;
   final Widget? child;
   final VoidCallback shrinkFinished;
+  final VoidCallback animateFinished;
   final Color color;
   final double width;
 
@@ -57,6 +59,7 @@ class _ExpandingPageContainerState extends State<ExpandingPageContainer>
         if (controller.status == AnimationStatus.completed) {
           setState(() {
             isAnimating = false;
+            widget.animateFinished();
           });
           // await Future.delayed(const Duration(milliseconds: 0));
           // setState(() {

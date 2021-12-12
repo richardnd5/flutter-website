@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'expanding_page.dart';
-import 'dart:html' as html;
+import 'package:flutter_website/web_stubs.dart'
+    if (dart.library.html) 'dart:html' as html;
+// import 'dart:html' as html;
 import 'dart:ui' as ui;
 
 class VideoUrls {
