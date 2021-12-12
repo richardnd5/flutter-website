@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_website/views/home/components/expanding_page_container.dart';
 import 'package:flutter_website/views/home/home_page_view_model.dart';
 
 class AboutPage extends StatelessWidget {

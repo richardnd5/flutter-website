@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'home_page_view_model.dart';
+import '../home/home_page_view_model.dart';
 
 class ContactPage extends StatelessWidget {
   const ContactPage({Key? key}) : super(key: key);

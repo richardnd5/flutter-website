@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 
-import 'home_page_view_model.dart';
+import '../home/home_page_view_model.dart';
 
-class CodingPage extends StatelessWidget {
-  const CodingPage({Key? key}) : super(key: key);
-
-  final pageType = PageType.coding;
+class MusicPage extends StatelessWidget {
+  const MusicPage({Key? key}) : super(key: key);
+  final pageType = PageType.music;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: pageType.getPageColor(),
       body: Center(
-        child: Text('Coding Page'),
+        child: Text('Music Page'),
       ),
     );
   }

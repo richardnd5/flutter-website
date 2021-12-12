@@ -1,24 +1,28 @@
 import 'package:flutter/material.dart';
 
 class ExpandingPageContainer extends StatefulWidget {
-  const ExpandingPageContainer({
-    Key? key,
-    required this.startOffset,
-    this.startSize = const Size(0, 0),
-    this.child,
-    required this.shrinkFinished,
-    required this.animateFinished,
-    required this.color,
-    required this.width,
-  }) : super(key: key);
+  const ExpandingPageContainer(
+      {Key? key,
+      required this.startOffset,
+      this.startSize = const Size(0, 0),
+      this.child,
+      required this.shrinkFinished,
+      required this.animateFinished,
+      this.color,
+      required this.width,
+      this.maxWidth,
+      this.maxHeight})
+      : super(key: key);
 
   final Offset startOffset;
   final Size startSize;
   final Widget? child;
   final VoidCallback shrinkFinished;
   final VoidCallback animateFinished;
-  final Color color;
+  final Color? color;
   final double width;
+  final double? maxWidth;
+  final double? maxHeight;
 
   @override
   _ExpandingPageContainerState createState() => _ExpandingPageContainerState();
@@ -109,8 +113,12 @@ class _ExpandingPageContainerState extends State<ExpandingPageContainer>
             child: AnimatedContainer(
               curve: curve,
               duration: duration,
-              width: !initialLoad ? widget.startSize.width : width,
-              height: !initialLoad ? widget.startSize.height : height,
+              width: !initialLoad
+                  ? widget.startSize.width
+                  : widget.maxWidth ?? width,
+              height: !initialLoad
+                  ? widget.startSize.height
+                  : widget.maxHeight ?? height,
               color: widget.color,
               child: Stack(
                 children: [

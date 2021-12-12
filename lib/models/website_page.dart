@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'home_page_view_model.dart';
+import '../views/home/home_page_view_model.dart';
 
 class WebsitePage {
   bool enabled;

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_website/views/home/website_page.dart';
+import 'package:flutter_website/models/website_page.dart';
 
-import 'about_page.dart';
-import 'coding_page.dart';
-import 'contact_page.dart';
-import 'music_page.dart';
+import '../about/about_page.dart';
+import '../coding/coding_page.dart';
+import '../contact/contact_page.dart';
+import '../music/music_page.dart';
 
 class HomePageViewModel extends ChangeNotifier {
   Map<PageType, WebsitePage> pages = {};
@@ -16,7 +16,7 @@ class HomePageViewModel extends ChangeNotifier {
   late WebsitePage codingPage;
   late WebsitePage contactPage;
 
-  HomePageViewModel() {}
+  HomePageViewModel();
 
   init(Size size) {
     List<Offset> offsetList = [
