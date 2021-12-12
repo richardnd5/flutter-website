@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_website/views/newHomePage/expandingHomePage2/expanding_home_page_view_model.dart';
+
+import 'home_page_view_model.dart';
 
 class WebsitePage {
   bool enabled;

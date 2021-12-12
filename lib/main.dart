@@ -1,59 +1,46 @@
-/*
-Imagine a game with a flat 2d canvas.
-
-You have a character that can walk it, and then own it.
-*/
-
 import 'package:flutter/material.dart';
-import 'package:flutter_website/home_page.dart';
-import 'package:flutter_website/navigation/nav_state.dart';
-import 'package:flutter_website/views/newHomePage/expandingHomePage2/expanding_home_page_view_model.dart';
+import 'package:flutter_website/app.dart';
+import 'package:flutter_website/navigation/nav_route_parser.dart';
+import 'package:flutter_website/navigation/nav_router_delegate.dart';
+import 'package:flutter_website/views/home/home_page_view_model.dart';
 import 'package:provider/provider.dart';
 
-import 'navigation/app_navigation_delegate.dart';
-import 'navigation/app_navigation_parser.dart';
-import 'navigation/back_button_dispatcher.dart';
-import 'new_page.dart';
-
-const String FlutterPageKey = 'flutterPageKey';
+import 'navigation/nav_state.dart';
 
 void main() {
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => ExpandingHomePageViewModel(),
+          create: (context) => NavState(),
           lazy: false,
         ),
-        ChangeNotifierProvider(create: (context) => NavState()),
-        Provider(create: (context) => AppNavigationParser()),
-        ChangeNotifierProxyProvider<NavState, AppNavigationDelegate>(
-          create: (context) => AppNavigationDelegate(
-            navState: Provider.of<NavState>(context, listen: false),
-          ),
-          update: (context, nav, delegate) => delegate!,
+        ChangeNotifierProvider(
+          create: (context) => HomePageViewModel(),
+          lazy: false,
         ),
-        ProxyProvider<NavState, AppBackButtonDispatcher>(
-          create: (context) => AppBackButtonDispatcher(
+        ChangeNotifierProxyProvider<NavState, NavRouterDelegate>(
+          create: (context) => NavRouterDelegate(
             Provider.of<NavState>(context, listen: false),
           ),
-          update: (context, nav, delegate) => delegate!,
+          update: (context, state, delegate) {
+            print('update state called');
+            delegate!.state = state;
+            return delegate;
+          },
+        ),
+        ProxyProvider<NavState, NavRouteParser>(
+          create: (context) => NavRouteParser(
+            Provider.of<NavState>(context, listen: false),
+          ),
+          update: (context, state, parser) {
+            print('update state called');
+            parser!.state = state;
+            return parser;
+          },
         ),
       ],
-      child: MaterialApp(home: MyApp()),
+      child: const App(),
     ),
   );
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerDelegate: Provider.of<AppNavigationDelegate>(context),
-      routeInformationParser: Provider.of<AppNavigationParser>(context),
-      backButtonDispatcher: Provider.of<AppBackButtonDispatcher>(context),
-    );
-  }
 }

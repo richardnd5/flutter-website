@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_website/navigation/fade_page.dart';
+import 'package:flutter_website/navigation/nav_router_delegate.dart';
 import 'package:flutter_website/navigation/nav_state.dart';
-import 'package:flutter_website/navigation/page_config.dart';
-import 'package:flutter_website/views/fade_page.dart';
-import 'package:flutter_website/views/newHomePage/expandingHomePage2/expanding_page_container.dart';
-import 'package:provider/provider.dart';
-import 'expanding_home_page_view_model.dart';
 
-class ExpandingHomePage2 extends StatefulWidget {
-  const ExpandingHomePage2({Key? key}) : super(key: key);
+import 'package:provider/provider.dart';
+import 'home_page_view_model.dart';
+import 'expanding_page_container.dart';
+
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<ExpandingHomePage2> createState() => _ExpandingHomePage2State();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _ExpandingHomePage2State extends State<ExpandingHomePage2> {
+class _HomePageState extends State<HomePage> {
   GlobalKey homeKey = GlobalKey();
   GlobalKey musicKey = GlobalKey();
   GlobalKey contactKey = GlobalKey();
@@ -24,18 +25,27 @@ class _ExpandingHomePage2State extends State<ExpandingHomePage2> {
 
   bool isAnimating = false;
 
-  addPageToStack(BuildContext context, Color color) {
-    Provider.of<NavState>(context, listen: false).addPage(
-      PageConfig(
-        '/coding',
-        FadePage(
-          child: Scaffold(
-            body: Container(color: color),
-          ),
-          // key: ValueKey('codingPage'),
-        ),
-      ),
-    );
+  addPageToStack(BuildContext context, PageType type, Color color) async {
+    PageConfig selectedPage;
+
+    switch (type) {
+      case PageType.coding:
+        selectedPage = codingPageConfig;
+        break;
+      case PageType.about:
+        selectedPage = aboutPageConfig;
+        break;
+      case PageType.music:
+        selectedPage = musicPageConfig;
+        break;
+      case PageType.contact:
+        selectedPage = contactPageConfig;
+        break;
+    }
+
+    Provider.of<NavState>(context, listen: false).goTo(selectedPage);
+    await Future.delayed(Duration(milliseconds: 800));
+    _whenShrinkAnimFinished();
   }
 
   _handleSquareTap(
@@ -57,6 +67,7 @@ class _ExpandingHomePage2State extends State<ExpandingHomePage2> {
           shrinkFinished: _whenShrinkAnimFinished,
           animateFinished: () => addPageToStack(
             context,
+            type,
             type.getPageColor(),
           ),
           color: type.getPageColor(),

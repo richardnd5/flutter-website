@@ -75,7 +75,7 @@ class _ExpandingPageContainerState extends State<ExpandingPageContainer>
         initialLoad = true;
         height = size.height;
         width = size.width;
-        showBackButton = true;
+        // showBackButton = true;
         isAnimating = true;
       });
     });

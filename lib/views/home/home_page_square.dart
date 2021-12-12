@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_website/views/newHomePage/models/website_page.dart';
+import 'package:flutter_website/views/home/website_page.dart';
 
-import 'expanding_home_page_view_model.dart';
+import 'home_page_view_model.dart';
 
 class HomePageSquare extends StatelessWidget {
   const HomePageSquare({

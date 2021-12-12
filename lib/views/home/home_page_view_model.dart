@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_website/home_page.dart';
-import 'package:flutter_website/music_page.dart';
-import 'package:flutter_website/views/newHomePage/models/website_page.dart';
-import 'package:flutter_website/views/newHomePage/websitePages/about_page.dart';
-import 'package:flutter_website/views/newHomePage/websitePages/coding_page.dart';
-import 'package:flutter_website/views/newHomePage/websitePages/contact_page.dart';
+import 'package:flutter_website/views/home/website_page.dart';
 
-class ExpandingHomePageViewModel extends ChangeNotifier {
+import 'about_page.dart';
+import 'coding_page.dart';
+import 'contact_page.dart';
+import 'music_page.dart';
+
+class HomePageViewModel extends ChangeNotifier {
   Map<PageType, WebsitePage> pages = {};
 
   List<WebsitePage> pageList = [];
@@ -16,7 +16,7 @@ class ExpandingHomePageViewModel extends ChangeNotifier {
   late WebsitePage codingPage;
   late WebsitePage contactPage;
 
-  ExpandingHomePageViewModel() {}
+  HomePageViewModel() {}
 
   init(Size size) {
     List<Offset> offsetList = [
@@ -96,7 +96,7 @@ extension PageTypeExtension on PageType {
       case PageType.about:
         return AboutPage();
       case PageType.music:
-        return MusicPage2();
+        return MusicPage();
       case PageType.coding:
         return CodingPage();
       case PageType.contact:
