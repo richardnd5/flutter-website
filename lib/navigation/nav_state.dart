@@ -8,6 +8,7 @@ class NavState extends ChangeNotifier {
   List<PageConfig> pages = [homePageConfig];
 
   List<Page> getPages() {
+    return [homePageConfig.page];
     return pages.map((e) => e.page).toList();
   }
 
