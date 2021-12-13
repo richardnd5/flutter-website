@@ -11,10 +11,18 @@ class AboutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InnerPageContainer(
-      child: Column(
-        children: [
-          Text('About Page'),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(32),
+        child: Column(
+          children: [
+            SizedBox(height: 64),
+            Text(
+              'Hello! Welcome to my website. It holds a few creative projects I have done over the years. This website is still under construction.',
+              style: Theme.of(context).textTheme.headline6,
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
       ),
     );
   }

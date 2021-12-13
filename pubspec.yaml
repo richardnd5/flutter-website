@@ -13,6 +13,7 @@ dependencies:
   html: ^0.15.0
   url_strategy: ^0.2.0
   font_awesome_flutter: ^9.2.0
+  flutter_svg: ^1.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -20,3 +21,4 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
+    - assets/images/

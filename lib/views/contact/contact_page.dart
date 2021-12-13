@@ -9,7 +9,18 @@ class ContactPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return InnerPageContainer(
       child: Column(
-        children: [Text('Contact Page')],
+        children: [
+          Text(
+            'Contact Page',
+            style: Theme.of(context).textTheme.headline3,
+          ),
+          SizedBox(height: 64),
+          Text(
+            'nathan at byeahwecan dot com',
+            style: Theme.of(context).textTheme.headline6,
+            textAlign: TextAlign.center,
+          ),
+        ],
       ),
     );
   }

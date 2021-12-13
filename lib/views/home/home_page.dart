@@ -123,7 +123,11 @@ class _HomePageState extends State<HomePage> {
                               height: watched.selectedPage == type
                                   ? size.height
                                   : 0,
-                              child: type.getPageWidget(),
+                              child: ListView(
+                                children: [
+                                  type.getPageWidget(),
+                                ],
+                              ),
                             ),
                           )
                         ],

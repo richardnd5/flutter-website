@@ -10,6 +10,7 @@ class InnerPageContainer extends StatelessWidget {
     var size = MediaQuery.of(context).size;
     return Container(
       width: size.width,
+      height: size.height,
       child: child,
     );
   }
