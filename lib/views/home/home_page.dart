@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_website/navigation/nav_router_delegate.dart';
 import 'package:flutter_website/navigation/nav_state.dart';
@@ -72,16 +74,19 @@ class _HomePageState extends State<HomePage> {
   ) {
     var size = MediaQuery.of(context).size;
     var watched = context.watch<HomePageViewModel>();
+
+    var animDuration = Duration(milliseconds: 400);
+    var curve = Curves.easeIn;
     return AnimatedAlign(
-      duration: Duration(milliseconds: 600),
-      curve: Curves.easeInOut,
+      duration: animDuration,
+      curve: curve,
       alignment:
           watched.selectedPage == type ? Alignment.center : deselectedAlignment,
       child: GestureDetector(
         onTap: () => goToPage(context, type),
         child: AnimatedContainer(
-            duration: Duration(milliseconds: 600),
-            curve: Curves.easeInOut,
+            duration: animDuration,
+            curve: curve,
             width: watched.selectedPage == null
                 ? size.width / 2
                 : size.width *
@@ -94,24 +99,27 @@ class _HomePageState extends State<HomePage> {
               child: Container(
                 color: type.getPageColor(),
                 child: AnimatedPadding(
-                  duration: Duration(milliseconds: 300),
+                  duration: animDuration,
+                  curve: curve,
                   padding: EdgeInsets.only(
                       top: watched.selectedPage == type ? 16 : 0),
                   child: AnimatedAlign(
-                    duration: Duration(milliseconds: 300),
+                    duration: animDuration,
+                    curve: curve,
                     alignment: watched.selectedPage == type
                         ? Alignment.topCenter
                         : Alignment.center,
                     child: SingleChildScrollView(
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           FaIcon(type.getIcon()),
                           AnimatedOpacity(
-                            duration: Duration(milliseconds: 400),
+                            duration: animDuration,
+                            curve: curve,
                             opacity: watched.selectedPage == type ? 1.0 : 0,
                             child: AnimatedContainer(
-                              duration: Duration(milliseconds: 400),
+                              duration: animDuration,
+                              curve: curve,
                               height: watched.selectedPage == type
                                   ? size.height
                                   : 0,
