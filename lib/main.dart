@@ -4,10 +4,12 @@ import 'package:flutter_website/navigation/nav_route_parser.dart';
 import 'package:flutter_website/navigation/nav_router_delegate.dart';
 import 'package:flutter_website/views/home/home_page_view_model.dart';
 import 'package:provider/provider.dart';
+import 'package:url_strategy/url_strategy.dart';
 
 import 'navigation/nav_state.dart';
 
 void main() {
+  setPathUrlStrategy();
   runApp(
     MultiProvider(
       providers: [
@@ -29,11 +31,12 @@ void main() {
             return delegate;
           },
         ),
-        ProxyProvider<NavState, NavRouteParser>(
+        ProxyProvider2<NavState, HomePageViewModel, NavRouteParser>(
           create: (context) => NavRouteParser(
             Provider.of<NavState>(context, listen: false),
+            Provider.of<HomePageViewModel>(context, listen: false),
           ),
-          update: (context, state, parser) {
+          update: (context, state, vm, parser) {
             print('update state called');
             parser!.state = state;
             return parser;

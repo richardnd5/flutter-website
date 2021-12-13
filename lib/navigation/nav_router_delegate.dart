@@ -11,7 +11,6 @@ class NavRouterDelegate extends RouterDelegate<PageConfig>
 
   NavRouterDelegate(this.state) {
     state.addListener(() {
-      print('state changed. Notify Listeners called');
       notifyListeners();
     });
   }

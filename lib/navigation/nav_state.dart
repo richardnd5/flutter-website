@@ -13,7 +13,7 @@ class NavState extends ChangeNotifier {
   }
 
   setNewRoutePath(PageConfig config) {
-    pages.clear();
+    // pages.clear();
     pages.add(config);
     notifyListeners();
   }
@@ -21,5 +21,12 @@ class NavState extends ChangeNotifier {
   goTo(PageConfig config) {
     pages.add(config);
     notifyListeners();
+  }
+
+  pop() {
+    if (pages.length > 1) {
+      pages.removeLast();
+      notifyListeners();
+    }
   }
 }
