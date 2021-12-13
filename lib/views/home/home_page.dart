@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_website/navigation/nav_router_delegate.dart';
 import 'package:flutter_website/navigation/nav_state.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'home_page_view_model.dart';
 
@@ -13,7 +14,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final double smallPercent = 0.1;
-  final double largePercent = 0.8;
+  final double largeHeight = 0.8;
+  final double largeWidth = 0.9;
 
   @override
   void initState() {
@@ -71,25 +73,58 @@ class _HomePageState extends State<HomePage> {
     var size = MediaQuery.of(context).size;
     var watched = context.watch<HomePageViewModel>();
     return AnimatedAlign(
-      duration: Duration(milliseconds: 400),
+      duration: Duration(milliseconds: 600),
       curve: Curves.easeInOut,
       alignment:
           watched.selectedPage == type ? Alignment.center : deselectedAlignment,
       child: GestureDetector(
         onTap: () => goToPage(context, type),
         child: AnimatedContainer(
-          duration: Duration(milliseconds: 400),
-          curve: Curves.easeInOut,
-          width: watched.selectedPage == null
-              ? size.width / 2
-              : size.width *
-                  (watched.selectedPage == type ? largePercent : smallPercent),
-          height: watched.selectedPage == null
-              ? size.height / 2
-              : size.height *
-                  (watched.selectedPage == type ? largePercent : smallPercent),
-          color: type.getPageColor(),
-        ),
+            duration: Duration(milliseconds: 600),
+            curve: Curves.easeInOut,
+            width: watched.selectedPage == null
+                ? size.width / 2
+                : size.width *
+                    (watched.selectedPage == type ? largeWidth : smallPercent),
+            height: watched.selectedPage == null
+                ? size.height / 2
+                : size.height *
+                    (watched.selectedPage == type ? largeHeight : smallPercent),
+            child: Material(
+              child: Container(
+                color: type.getPageColor(),
+                child: AnimatedPadding(
+                  duration: Duration(milliseconds: 300),
+                  padding: EdgeInsets.only(
+                      top: watched.selectedPage == type ? 16 : 0),
+                  child: AnimatedAlign(
+                    duration: Duration(milliseconds: 300),
+                    alignment: watched.selectedPage == type
+                        ? Alignment.topCenter
+                        : Alignment.center,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          FaIcon(type.getIcon()),
+                          AnimatedOpacity(
+                            duration: Duration(milliseconds: 400),
+                            opacity: watched.selectedPage == type ? 1.0 : 0,
+                            child: AnimatedContainer(
+                              duration: Duration(milliseconds: 400),
+                              height: watched.selectedPage == type
+                                  ? size.height
+                                  : 0,
+                              child: type.getPageWidget(),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            )),
       ),
     );
   }

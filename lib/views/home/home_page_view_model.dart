@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_website/models/website_page.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../about/about_page.dart';
 import '../coding/coding_page.dart';
@@ -112,6 +113,32 @@ extension PageTypeExtension on PageType {
         return Colors.pink;
       case PageType.contact:
         return Colors.purple;
+    }
+  }
+
+  IconData getIcon() {
+    switch (this) {
+      case PageType.about:
+        return FontAwesomeIcons.userCircle;
+      case PageType.music:
+        return FontAwesomeIcons.music;
+      case PageType.coding:
+        return FontAwesomeIcons.code;
+      case PageType.contact:
+        return FontAwesomeIcons.envelope;
+    }
+  }
+
+  Widget getPageWidget() {
+    switch (this) {
+      case PageType.about:
+        return AboutPage();
+      case PageType.music:
+        return MusicPage();
+      case PageType.coding:
+        return CodingPage();
+      case PageType.contact:
+        return ContactPage();
     }
   }
 }
