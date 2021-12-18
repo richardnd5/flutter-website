@@ -40,12 +40,6 @@ class CodingPage extends StatefulWidget {
 }
 
 class _CodingPageState extends State<CodingPage> {
-  @override
-  void initState() {
-    print('coding page init');
-    super.initState();
-  }
-
   final pageType = PageType.coding;
 
   Widget build(BuildContext context) {
