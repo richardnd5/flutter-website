@@ -6,7 +6,7 @@ import 'dart:ui' as ui;
 
 class VideoUrls {
   static const fred =
-      'https://player.vimeo.com/video/614950523?h=835c83b140&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479';
+      'https://player.vimeo.com/video/614950523?h=835c83b140&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;';
   static const home =
       'https://player.vimeo.com/video/614963762?h=a647c2a7b3&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479';
 
@@ -56,10 +56,10 @@ class VimeoVideo extends StatelessWidget {
     ui.platformViewRegistry.registerViewFactory(
       url,
       (int id) => html.IFrameElement()
-        ..width = MediaQuery.of(context).size.width.toString()
-        ..height = MediaQuery.of(context).size.height.toString()
         ..src = url
-        ..style.border = 'none',
+        ..style.border = 'none'
+        ..style.width = '100%'
+        ..style.height = '100%',
     );
 
     return SizedBox(

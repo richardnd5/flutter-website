@@ -7,4 +7,6 @@ class IFrameElement {
 
 class Style {
   late String border;
+  late String width;
+  late String height;
 }
