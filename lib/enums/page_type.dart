@@ -8,6 +8,19 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 enum PageType { coding, about, music, contact }
 
 extension PageTypeExtension on PageType {
+  String getName() {
+    switch (this) {
+      case PageType.about:
+        return 'About';
+      case PageType.music:
+        return 'Music';
+      case PageType.coding:
+        return 'Coding';
+      case PageType.contact:
+        return 'Contact';
+    }
+  }
+
   Widget getPageType() {
     switch (this) {
       case PageType.about:
