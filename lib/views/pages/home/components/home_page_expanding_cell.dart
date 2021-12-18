@@ -106,7 +106,12 @@ class HomePageExpandingCell extends StatelessWidget {
                               child: type.getPageWidget(),
                             ),
                           )
-                        : Icon(type.getIcon()),
+                        : FittedBox(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Icon(type.getIcon()),
+                            ),
+                          ),
                   ),
                 ),
               ),
