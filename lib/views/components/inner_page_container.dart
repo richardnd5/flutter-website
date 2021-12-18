@@ -28,21 +28,8 @@ class _InnerPageContainerState extends State<InnerPageContainer> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-
     return Container(
-      width: size.width,
-      height: size.height,
       child: widget.child,
-    );
-    return AnimatedOpacity(
-      duration: Duration(milliseconds: 400),
-      opacity: initialLoad ? 1.0 : 0,
-      child: Container(
-        width: size.width,
-        height: size.height,
-        child: widget.child,
-      ),
     );
   }
 }

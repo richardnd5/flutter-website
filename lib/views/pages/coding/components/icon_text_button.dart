@@ -18,22 +18,30 @@ class IconTextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        InkWell(
-          onTap: onTap,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(16),
-            child: Image.asset(
-              assetPath,
-              width: imageSize,
-              height: imageSize,
+    return FittedBox(
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        width: imageSize,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            InkWell(
+              onTap: onTap,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: Image.asset(
+                  assetPath,
+                  width: imageSize >= 60 ? 60 : imageSize,
+                  height: imageSize >= 60 ? 60 : imageSize,
+                ),
+              ),
             ),
-          ),
+            SizedBox(height: 16),
+            Text(label, textAlign: TextAlign.center)
+          ],
         ),
-        SizedBox(height: 16),
-        Text(label)
-      ],
+      ),
     );
   }
 }

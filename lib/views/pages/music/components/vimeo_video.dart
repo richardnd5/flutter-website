@@ -19,23 +19,6 @@ class VideoUrls {
       'https://player.vimeo.com/video/614963741?h=141955f728&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479';
 }
 
-class MusicPage2 extends StatelessWidget {
-  const MusicPage2({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        VimeoVideo(height: 300, url: VideoUrls.padThai),
-        VimeoVideo(height: 300, url: VideoUrls.fred),
-        VimeoVideo(height: 300, url: VideoUrls.home),
-        VimeoVideo(height: 300, url: VideoUrls.forUntoUs),
-        VimeoVideo(height: 300, url: VideoUrls.nunc),
-      ],
-    );
-  }
-}
-
 class VimeoVideo extends StatelessWidget {
   const VimeoVideo({
     Key? key,

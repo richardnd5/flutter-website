@@ -17,10 +17,10 @@ class _AboutPageState extends State<AboutPage> {
     return InnerPageContainer(
       child: Padding(
         padding: const EdgeInsets.all(32),
-        child: Column(
+        child: ListView(
           children: [
             Text(
-              'Hello! Welcome to my website. It holds a few creative projects I have done over the years. This website is still under construction.',
+              'Welcome! This website is an experiment with new navigation patterns for the web. It is built in Flutter.',
               style: Theme.of(context).textTheme.bodyText1,
               textAlign: TextAlign.center,
             ),

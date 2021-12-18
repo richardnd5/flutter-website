@@ -9,13 +9,12 @@ class ContactPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return InnerPageContainer(
       child: ListView(
-        shrinkWrap: true,
         children: [
           Text(
             'Contact Page',
             style: Theme.of(context).textTheme.headline3,
+            textAlign: TextAlign.center,
           ),
-          // SizedBox(height: 64),
           Text(
             'nathan at byeahwecan dot com',
             style: Theme.of(context).textTheme.headline6,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_website/views/pages/coding/components/icon_text_button.dart';
 import 'package:flutter_website/views/components/inner_page_container.dart';
-import 'package:flutter_website/views/pages/music/music_page_new.dart';
+import 'package:flutter_website/views/pages/music/components/vimeo_video.dart';
 
 import '../home/home_page_view_model.dart';
 

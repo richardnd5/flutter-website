@@ -9,6 +9,9 @@ class HomePageExpandingCell extends StatelessWidget {
   final double smallPercent = 0.1;
   final double largeHeight = 0.9;
   final double largeWidth = 1;
+  final double maxWidth = 1000;
+  final double maxHeight = 1000;
+
   final PageType type;
 
   _goToPage(BuildContext context, PageType type) {
@@ -37,10 +40,12 @@ class HomePageExpandingCell extends StatelessWidget {
     var size = MediaQuery.of(context).size;
     var watched = context.watch<HomePageViewModel>();
 
+    bool typeSelected = watched.selectedPage == type;
+
     return AnimatedAlign(
       duration: HomePageViewModel.animDuration,
       curve: HomePageViewModel.curve,
-      alignment: watched.selectedPage == type
+      alignment: typeSelected
           ? Alignment.topCenter
           : watched.selectedPage == null
               ? _getNullAlignment()
@@ -49,37 +54,59 @@ class HomePageExpandingCell extends StatelessWidget {
         onTap: () => _goToPage(context, type),
         child: AnimatedContainer(
           duration: HomePageViewModel.animDuration,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(
+              Radius.circular(
+                watched.selectedPage == null
+                    ? 0
+                    : typeSelected
+                        ? 24
+                        : 6,
+              ),
+            ),
+          ),
+          clipBehavior: Clip.hardEdge,
           curve: HomePageViewModel.curve,
           width: watched.selectedPage == null
               ? size.width / 2
-              : size.width *
-                  (watched.selectedPage == type ? largeWidth : smallPercent),
+              : (size.width * (typeSelected ? largeWidth : smallPercent)) >
+                      maxWidth
+                  ? maxWidth
+                  : (size.width * (typeSelected ? largeWidth : smallPercent)),
           height: watched.selectedPage == null
               ? size.height / 2
-              : size.height *
-                  (watched.selectedPage == type ? largeHeight : smallPercent),
+              : (size.height * (typeSelected ? largeHeight : smallPercent)) >
+                      maxHeight
+                  ? maxHeight
+                  : (size.height * (typeSelected ? largeHeight : smallPercent)),
           child: Material(
             child: Container(
               color: type.getPageColor(),
               child: AnimatedPadding(
                 duration: HomePageViewModel.animDuration,
                 curve: HomePageViewModel.curve,
-                padding:
-                    EdgeInsets.only(top: watched.selectedPage == type ? 16 : 0),
+                padding: EdgeInsets.only(top: typeSelected ? 16 : 0),
                 child: AnimatedAlign(
                   duration: HomePageViewModel.animDuration,
                   curve: HomePageViewModel.curve,
-                  alignment: _getAligment(watched),
-                  child: AnimatedOpacity(
+                  alignment: _getAligment(typeSelected),
+                  child: AnimatedSwitcher(
                     duration: HomePageViewModel.animDuration,
-                    curve: HomePageViewModel.curve,
-                    opacity: watched.selectedPage == type ? 1.0 : 0,
-                    child: AnimatedContainer(
-                      duration: HomePageViewModel.animDuration,
-                      curve: HomePageViewModel.curve,
-                      height: watched.selectedPage == type ? size.height : 0,
-                      child: type.getPageWidget(),
-                    ),
+                    switchInCurve: HomePageViewModel.curve,
+                    switchOutCurve: HomePageViewModel.curve,
+                    child: typeSelected
+                        ? AnimatedOpacity(
+                            duration: HomePageViewModel.animDuration,
+                            curve: HomePageViewModel.curve,
+                            opacity: typeSelected ? 1.0 : 0,
+                            child: AnimatedContainer(
+                              duration: HomePageViewModel.animDuration,
+                              curve: HomePageViewModel.curve,
+                              height: typeSelected ? size.height : 0,
+                              child: type.getPageWidget(),
+                            ),
+                          )
+                        : Icon(type.getIcon()),
                   ),
                 ),
               ),
@@ -107,10 +134,8 @@ class HomePageExpandingCell extends StatelessWidget {
     }
   }
 
-  Alignment _getAligment(HomePageViewModel watched) {
-    return watched.selectedPage == type
-        ? Alignment.topCenter
-        : Alignment.center;
+  Alignment _getAligment(bool typeSelected) {
+    return typeSelected ? Alignment.topCenter : Alignment.center;
   }
 
   Alignment _getNullAlignment() {
