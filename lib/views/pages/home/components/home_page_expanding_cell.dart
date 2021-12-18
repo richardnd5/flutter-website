@@ -57,9 +57,9 @@ class HomePageExpandingCell extends StatelessWidget {
         child: AnimatedPadding(
           duration: HomePageViewModel.animDuration,
           curve: HomePageViewModel.curve,
-          padding: EdgeInsets.all(watched.selectedPage == null || !typeSelected
-              ? 0
-              : selectedPadding),
+          padding: EdgeInsets.all(
+            watched.selectedPage == null || !typeSelected ? 0 : selectedPadding,
+          ),
           child: AnimatedContainer(
             duration: HomePageViewModel.animDuration,
             curve: HomePageViewModel.curve,
@@ -75,22 +75,12 @@ class HomePageExpandingCell extends StatelessWidget {
               ),
             ),
             clipBehavior: Clip.hardEdge,
-            width: watched.selectedPage == null
-                ? size.width / 2
-                : (size.width * (typeSelected ? largeWidth : smallPercent)) >
-                        maxWidth
-                    ? maxWidth - selectedPadding
-                    : (size.width *
-                            (typeSelected ? largeWidth : smallPercent)) -
-                        selectedPadding,
-            height: watched.selectedPage == null
-                ? size.height / 2
-                : (size.height * (typeSelected ? largeHeight : smallPercent)) >
-                        maxHeight
-                    ? maxHeight - selectedPadding
-                    : (size.height *
-                            (typeSelected ? largeHeight : smallPercent)) -
-                        selectedPadding,
+            width: _getWidths(watched, size, typeSelected) <= 50
+                ? 50
+                : _getWidths(watched, size, typeSelected),
+            height: _getHeights(watched, size, typeSelected) <= 50
+                ? 50
+                : _getHeights(watched, size, typeSelected),
             child: Material(
               child: Container(
                 color: type.getPageColor(),
@@ -149,6 +139,25 @@ class HomePageExpandingCell extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  double _getHeights(HomePageViewModel watched, Size size, bool typeSelected) {
+    return (watched.selectedPage == null
+        ? size.height / 2
+        : (size.height * (typeSelected ? largeHeight : smallPercent)) >
+                maxHeight
+            ? maxHeight - selectedPadding
+            : (size.height * (typeSelected ? largeHeight : smallPercent)) -
+                selectedPadding);
+  }
+
+  double _getWidths(HomePageViewModel watched, Size size, bool typeSelected) {
+    return watched.selectedPage == null
+        ? size.width / 2
+        : (size.width * (typeSelected ? largeWidth : smallPercent)) > maxWidth
+            ? maxWidth - selectedPadding
+            : (size.width * (typeSelected ? largeWidth : smallPercent)) -
+                selectedPadding;
   }
 
   Alignment _getDeselectedAlignment(PageType selectedPage) {
