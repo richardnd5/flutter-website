@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_website/views/inner_page_container.dart';
+import 'package:flutter_website/views/common/inner_page_container.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../home/home_page_view_model.dart';

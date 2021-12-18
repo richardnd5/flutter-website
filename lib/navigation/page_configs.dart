@@ -45,3 +45,10 @@ final unknownPageConfig = PageConfig(
     ),
   ),
 );
+
+class PageConfig {
+  String path;
+  Page page;
+
+  PageConfig({required this.path, required this.page});
+}

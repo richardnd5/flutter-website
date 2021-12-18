@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_website/web_stubs.dart'
+import 'package:flutter_website/stubs/web_stubs.dart'
     if (dart.library.html) 'dart:html' as html;
 // import 'dart:html' as html;
 import 'dart:ui' as ui;
@@ -24,8 +24,6 @@ class MusicPage2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-
     return ListView(
       children: [
         VimeoVideo(height: 300, url: VideoUrls.padThai),

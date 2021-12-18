@@ -3,14 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_website/navigation/nav_router_delegate.dart';
 import 'package:flutter_website/navigation/nav_state.dart';
 import 'package:flutter_website/views/home/home_page_view_model.dart';
+import 'package:provider/provider.dart';
 
 class NavRouteParser extends RouteInformationParser<PageConfig> {
+  static of(BuildContext context) => context.watch<NavRouteParser>();
+
   NavState state;
   HomePageViewModel vm;
   NavRouteParser(this.state, this.vm);
   @override
   Future<PageConfig> parseRouteInformation(RouteInformation routeInformation) {
-    print('parse route information');
     Uri? uri = Uri.tryParse(routeInformation.location ?? '');
 
     if (uri?.pathSegments.isEmpty == true) {
