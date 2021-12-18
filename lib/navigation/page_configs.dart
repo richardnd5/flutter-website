@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_website/navigation/fade_page.dart';
-import 'package:flutter_website/navigation/nav_router_delegate.dart';
 import 'package:flutter_website/views/about/about_page.dart';
 import 'package:flutter_website/views/coding/coding_page.dart';
 import 'package:flutter_website/views/contact/contact_page.dart';
@@ -50,5 +49,8 @@ class PageConfig {
   String path;
   Page page;
 
-  PageConfig({required this.path, required this.page});
+  PageConfig({
+    required this.path,
+    required this.page,
+  });
 }
