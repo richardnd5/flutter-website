@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_website/views/home/home_page_view_model.dart';
-import 'package:flutter_website/views/common/inner_page_container.dart';
+import 'package:flutter_website/views/pages/home/home_page_view_model.dart';
+import 'package:flutter_website/views/components/inner_page_container.dart';
 
 class AboutPage extends StatefulWidget {
   const AboutPage({Key? key}) : super(key: key);

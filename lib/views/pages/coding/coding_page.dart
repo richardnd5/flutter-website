@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_website/views/common/inner_page_container.dart';
+import 'package:flutter_website/views/components/inner_page_container.dart';
+import 'package:flutter_website/views/pages/home/home_page_view_model.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../home/home_page_view_model.dart';
 import 'components/icon_text_button.dart';
 
 final gitHub = CodingOption(

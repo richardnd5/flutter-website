@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_website/views/common/page_gradient.dart';
-import 'package:flutter_website/views/common/static_colors.dart';
-import 'package:flutter_website/views/home/components/home_page_expanding_cell.dart';
+import 'package:flutter_website/views/helpers/page_gradient.dart';
+import 'package:flutter_website/views/constants/static_colors.dart';
+import 'package:flutter_website/views/pages/home/components/home_page_expanding_cell.dart';
 import 'package:provider/provider.dart';
 import 'home_page_view_model.dart';
 
