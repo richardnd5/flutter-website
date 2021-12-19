@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_website/navigation/nav_state.dart';
 import 'package:flutter_website/views/helpers/page_gradient.dart';
 import 'package:flutter_website/views/constants/static_colors.dart';
 import 'package:flutter_website/views/pages/home/components/home_page_expanding_cell.dart';
@@ -36,8 +37,11 @@ class _HomePageState extends State<HomePage> {
 
   GestureDetector _buildBackground() {
     return GestureDetector(
-      onTap: () => Provider.of<HomePageViewModel>(context, listen: false)
-          .selectedPage = null,
+      onTap: () {
+        Provider.of<HomePageViewModel>(context, listen: false).selectedPage =
+            null;
+        Provider.of<NavState>(context, listen: false).goTo(homePageConfig);
+      },
       child: Container(
         decoration:
             pageGradient(AppColors.bgTopGradient, AppColors.bgBottomGradient),

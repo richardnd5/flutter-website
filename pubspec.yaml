@@ -14,6 +14,8 @@ dependencies:
   url_strategy: ^0.2.0
   font_awesome_flutter: ^9.2.0
   flutter_svg: ^1.0.0
+  flame: ^1.0.0
+  google_fonts:
 dev_dependencies:
   flutter_test:
     sdk: flutter

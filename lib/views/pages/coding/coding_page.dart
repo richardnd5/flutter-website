@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_website/views/pages/home/home_page_view_model.dart';
+import 'package:provider/provider.dart';
 
 import 'components/icon_text_button.dart';
 
@@ -20,6 +21,21 @@ final csa = CodingOption(
 );
 
 final optionList = [
+  sStories,
+  csa,
+  gitHub,
+  sStories,
+  csa,
+  gitHub,
+  sStories,
+  csa,
+  gitHub,
+  sStories,
+  csa,
+  gitHub,
+  sStories,
+  csa,
+  gitHub,
   sStories,
   csa,
   gitHub,
@@ -44,18 +60,23 @@ class CodingPage extends StatefulWidget {
 }
 
 class _CodingPageState extends State<CodingPage> {
-  final pageType = PageType.coding;
+  int getCrossAxisCount(double width) {
+    if (width < 600) return 2;
+    if (width < 800) return 3;
+    if (width < 1000) return 4;
+    return 5;
+  }
 
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        mainAxisExtent: 120,
+        crossAxisCount: getCrossAxisCount(size.width),
+        mainAxisExtent: 150,
       ),
       itemCount: optionList.length,
       itemBuilder: (_, index) {
         return IconTextButton(
-          imageSize: 120,
           assetPath: optionList[index].asset,
           label: optionList[index].label,
           onTap: () => launchURL(optionList[index].url),
