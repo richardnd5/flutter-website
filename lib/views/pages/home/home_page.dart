@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        _buildBackground(),
+        _buildBackground(context),
         HomePageExpandingCell(PageType.about),
         HomePageExpandingCell(PageType.contact),
         HomePageExpandingCell(PageType.music),
@@ -35,16 +35,24 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  GestureDetector _buildBackground() {
+  GestureDetector _buildBackground(BuildContext context) {
+    Color topColor =
+        context.watch<HomePageViewModel>().selectedPage?.getPageColor() ??
+            AppColors.bgTopGradient;
+
     return GestureDetector(
       onTap: () {
         Provider.of<HomePageViewModel>(context, listen: false).selectedPage =
             null;
         Provider.of<NavState>(context, listen: false).goTo(homePageConfig);
       },
-      child: Container(
-        decoration:
-            pageGradient(AppColors.bgTopGradient, AppColors.bgBottomGradient),
+      child: AnimatedContainer(
+        duration: HomePageViewModel.animDuration,
+        curve: HomePageViewModel.curve,
+        decoration: pageGradient(
+          topColor.withAlpha(150),
+          AppColors.bgBottomGradient,
+        ),
       ),
     );
   }

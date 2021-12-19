@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_website/views/pages/home/home_page_view_model.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_website/models/web_link_item.dart';
 
 import 'components/icon_text_button.dart';
 
-final gitHub = CodingOption(
+final gitHub = WebLinkOption(
   url: 'https://github.com/richardnd5',
   asset: 'assets/images/github.png',
   label: 'Github',
 );
-final sStories = CodingOption(
+final sStories = WebLinkOption(
   url: 'https://apps.apple.com/us/app/sstories/id1455299421?ign-mpt=uo%3D2',
   asset: 'assets/images/sStoriesReduced.jpg',
   label: 'sStories',
 );
-final csa = CodingOption(
+final csa = WebLinkOption(
   url: 'https://apps.apple.com/ph/app/carls-sporting-adventure/id1467429782',
   asset: 'assets/images/CSA.jpg',
   label: "Carl's Sporting Adventure",
@@ -24,33 +23,7 @@ final optionList = [
   sStories,
   csa,
   gitHub,
-  sStories,
-  csa,
-  gitHub,
-  sStories,
-  csa,
-  gitHub,
-  sStories,
-  csa,
-  gitHub,
-  sStories,
-  csa,
-  gitHub,
-  sStories,
-  csa,
-  gitHub,
 ];
-
-class CodingOption {
-  CodingOption({
-    required this.url,
-    required this.label,
-    required this.asset,
-  });
-  final String label;
-  final String url;
-  final String asset;
-}
 
 class CodingPage extends StatefulWidget {
   const CodingPage({Key? key}) : super(key: key);
@@ -69,19 +42,22 @@ class _CodingPageState extends State<CodingPage> {
 
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: getCrossAxisCount(size.width),
-        mainAxisExtent: 150,
+    return Padding(
+      padding: const EdgeInsets.only(top: 16),
+      child: GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: getCrossAxisCount(size.width),
+          mainAxisExtent: 150,
+        ),
+        itemCount: optionList.length,
+        itemBuilder: (_, index) {
+          return IconTextButton(
+            assetPath: optionList[index].asset,
+            label: optionList[index].label,
+            onTap: () => launchURL(optionList[index].url),
+          );
+        },
       ),
-      itemCount: optionList.length,
-      itemBuilder: (_, index) {
-        return IconTextButton(
-          assetPath: optionList[index].asset,
-          label: optionList[index].label,
-          onTap: () => launchURL(optionList[index].url),
-        );
-      },
     );
   }
 }
