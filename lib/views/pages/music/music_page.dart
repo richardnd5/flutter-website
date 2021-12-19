@@ -103,45 +103,39 @@ class _MusicPageState extends State<MusicPage> {
           ),
         ),
         if (selectedOption != null)
-          Expanded(
-            child: AnimatedContainer(
-              duration: HomePageViewModel.animDuration,
-              curve: HomePageViewModel.curve,
-              child: Stack(
-                children: [
-                  Align(
-                    alignment: Alignment.center,
-                    child: Stack(
-                      children: [
-                        Container(
-                          child: GestureDetector(
-                            onTap: () => setState(() => selectedOption = null),
-                            child: new BackdropFilter(
-                              filter: new ui.ImageFilter.blur(
-                                  sigmaX: 3.0, sigmaY: 3.0),
-                              child: new Container(
-                                decoration: new BoxDecoration(
-                                  color: Colors.black.withOpacity(0.2),
-                                ),
-                              ),
+          Stack(
+            children: [
+              Align(
+                alignment: Alignment.center,
+                child: Stack(
+                  children: [
+                    Container(
+                      child: GestureDetector(
+                        onTap: () => setState(() => selectedOption = null),
+                        child: new BackdropFilter(
+                          filter:
+                              new ui.ImageFilter.blur(sigmaX: 3.0, sigmaY: 3.0),
+                          child: new Container(
+                            decoration: new BoxDecoration(
+                              color: Colors.black.withOpacity(0.2),
                             ),
                           ),
                         ),
-                        Container(
-                          alignment: Alignment.center,
-                          width: size.width,
-                          height: size.height / 2,
-                          child: VimeoVideo(
-                            url: selectedOption!.url,
-                            height: size.height / 2,
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
-                ],
+                    Container(
+                      alignment: Alignment.center,
+                      width: size.width,
+                      height: size.height / 2,
+                      child: VimeoVideo(
+                        url: selectedOption!.url,
+                        height: size.height / 2,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
+            ],
           ),
       ],
     );
