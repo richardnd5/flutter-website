@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_website/models/web_link_item.dart';
+import 'package:flutter_website/navigation/nav_state.dart';
+import 'package:provider/provider.dart';
 
 import 'components/icon_text_button.dart';
 
@@ -18,11 +20,17 @@ final csa = WebLinkOption(
   asset: 'assets/images/CSA.jpg',
   label: "Carl's Sporting Adventure",
 );
+final pixel = WebLinkOption(
+  url: '',
+  asset: 'assets/images/pixel.png',
+  label: "Pixel",
+);
 
 final optionList = [
   sStories,
   csa,
   gitHub,
+  pixel,
 ];
 
 class CodingPage extends StatefulWidget {
@@ -54,7 +62,14 @@ class _CodingPageState extends State<CodingPage> {
           return IconTextButton(
             assetPath: optionList[index].asset,
             label: optionList[index].label,
-            onTap: () => launchURL(optionList[index].url),
+            onTap: () {
+              if (optionList[index] == pixel) {
+                Provider.of<NavState>(context, listen: false)
+                    .goTo(pixelPageConfig);
+              } else {
+                launchURL(optionList[index].url);
+              }
+            },
           );
         },
       ),
