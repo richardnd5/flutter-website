@@ -4,40 +4,49 @@ import 'package:flutter_website/navigation/page_configs.dart';
 import 'package:flutter_website/views/pages/coding/coding_page.dart';
 export 'package:flutter_website/navigation/page_configs.dart';
 
+enum CustomPages { home, pixel, gameOfLife }
+
 class NavState extends ChangeNotifier {
   NavState();
   List<PageConfig> pages = [homePageConfig];
   List<PageConfig> pixelPages = [homePageConfig, pixelPageConfig];
+  List<PageConfig> gameOfLifePages = [homePageConfig, gameOfLifePageConfig];
 
   bool _showPixel = false;
-
   bool get showPixel => _showPixel;
-
   set showPixel(bool pixel) {
     _showPixel = pixel;
   }
 
+  CustomPages selectedPage = CustomPages.home;
+
   List<Page> getPages() {
-    return showPixel
-        ? pixelPages.map((e) => e.page).toList()
-        : [homePageConfig.page];
+    switch (selectedPage) {
+      case CustomPages.home:
+        return [homePageConfig.page];
+      case CustomPages.pixel:
+        return pixelPages.map((e) => e.page).toList();
+      case CustomPages.gameOfLife:
+        return gameOfLifePages.map((e) => e.page).toList();
+    }
+
+    // return showPixel
+    //     ? pixelPages.map((e) => e.page).toList()
+    //     : [homePageConfig.page];
   }
 
   setNewRoutePath(PageConfig config) {
-    // pages.clear();
     pages.add(config);
     notifyListeners();
   }
 
   goTo(PageConfig config) {
     if (config == pixelPageConfig) {
-      showPixel = true;
-      notifyListeners();
-      print('pixel!');
+      selectedPage = CustomPages.pixel;
+    } else if (config == gameOfLifePageConfig) {
+      selectedPage = CustomPages.gameOfLife;
     } else {
-      showPixel = false;
-      notifyListeners();
-      print('pixel off!');
+      selectedPage = CustomPages.home;
     }
     pages.add(config);
     notifyListeners();

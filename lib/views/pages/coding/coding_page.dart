@@ -25,12 +25,18 @@ final pixel = WebLinkOption(
   asset: 'assets/images/pixel.png',
   label: "Pixel",
 );
+final gameOfLife = WebLinkOption(
+  url: '',
+  asset: 'assets/images/pixel.png',
+  label: "Game of Life",
+);
 
 final optionList = [
   sStories,
   csa,
   gitHub,
   pixel,
+  gameOfLife,
 ];
 
 class CodingPage extends StatefulWidget {
@@ -66,6 +72,9 @@ class _CodingPageState extends State<CodingPage> {
               if (optionList[index] == pixel) {
                 Provider.of<NavState>(context, listen: false)
                     .goTo(pixelPageConfig);
+              } else if (optionList[index] == gameOfLife) {
+                Provider.of<NavState>(context, listen: false)
+                    .goTo(gameOfLifePageConfig);
               } else {
                 launchURL(optionList[index].url);
               }

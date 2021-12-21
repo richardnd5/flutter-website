@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_website/gameOfLife/views/pages/game_of_life_page.dart';
 import 'package:flutter_website/navigation/fade_page.dart';
 import 'package:flutter_website/pixel/views/pages/pixel_page.dart';
 import 'package:flutter_website/views/pages/about/about_page.dart';
@@ -41,6 +42,12 @@ final pixelPageConfig = PageConfig(
   path: '/pixel',
   page: const FadePage(
     child: PixelPage(),
+  ),
+);
+final gameOfLifePageConfig = PageConfig(
+  path: '/gameOfLife',
+  page: const FadePage(
+    child: GameOfLifePage(),
   ),
 );
 final unknownPageConfig = PageConfig(

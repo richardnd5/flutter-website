@@ -29,11 +29,13 @@ class NavRouteParser extends RouteInformationParser<PageConfig> {
       state.pop();
 
       if (uri?.pathSegments[0].contains('pixel') == true) {
-        vm.selectedPage = PageType.music;
-        state.showPixel = true;
+        state.selectedPage = CustomPages.pixel;
         return SynchronousFuture(pixelPageConfig);
+      }
+      if (uri?.pathSegments[0].contains('gameOfLife') == true) {
+        state.selectedPage = CustomPages.gameOfLife;
       } else {
-        state.showPixel = false;
+        state.selectedPage = CustomPages.home;
       }
       if (uri?.pathSegments[0].contains('music') == true) {
         vm.selectedPage = PageType.music;

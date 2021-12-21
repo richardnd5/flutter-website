@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_website/app.dart';
+import 'package:flutter_website/gameOfLife/services/game_of_life_service.dart';
 import 'package:flutter_website/navigation/nav_route_parser.dart';
 import 'package:flutter_website/navigation/nav_router_delegate.dart';
 import 'package:flutter_website/navigation/nav_state.dart';
@@ -38,5 +39,6 @@ final appProviders = [
     },
   ),
   ChangeNotifierProvider(create: (_) => SoundService()),
-  ChangeNotifierProvider(create: (_) => CanvasService())
+  ChangeNotifierProvider(create: (_) => CanvasService()),
+  ChangeNotifierProvider(create: (context) => GameOfLifeService()),
 ];
