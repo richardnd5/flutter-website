@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_website/navigation/fade_page.dart';
-import 'package:flutter_website/pixel/views/pixel_page.dart';
+import 'package:flutter_website/pixel/views/pages/pixel_page.dart';
 import 'package:flutter_website/views/pages/about/about_page.dart';
 import 'package:flutter_website/views/pages/coding/coding_page.dart';
 import 'package:flutter_website/views/pages/contact/contact_page.dart';

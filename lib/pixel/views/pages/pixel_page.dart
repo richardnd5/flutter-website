@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_website/pixel/services/canvas_service.dart';
-import 'package:flutter_website/pixel/views/show_snack_bar.dart';
-import 'package:flutter_website/pixel/views/two_finger_interactive_viewer.dart'
+import 'package:flutter_website/pixel/views/functions/show_snack_bar.dart';
+import 'package:flutter_website/pixel/views/components/two_finger_interactive_viewer.dart'
     as viewer;
 import 'package:provider/provider.dart';
-import 'my_painter.dart';
+import '../components/my_painter.dart';
 
 class PixelPage extends StatefulWidget {
   const PixelPage({Key? key}) : super(key: key);
