@@ -40,7 +40,8 @@ class _PixelPageState extends State<PixelPage> {
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       canvas = Provider.of<CanvasService>(context, listen: false);
-      canvas!.startCanvasService(Size(16, 16), MediaQuery.of(context).size);
+      canvas!.startCanvasService(
+          CanvasService.globalCanvasSize, MediaQuery.of(context).size);
     });
   }
 
@@ -117,39 +118,28 @@ class _PixelPageState extends State<PixelPage> {
     });
     ScaffoldMessenger.of(context).clearSnackBars();
     canvas?.resetCanvasToScreenDimensions(
-        canvas?.gridDimensions ?? Size(20, 20),
+        canvas?.gridDimensions ?? CanvasService.globalCanvasSize,
         canvas?.screenSize ?? Size(100, 100));
   }
 
   handleCanvasTap(Offset localPosition) {
-    print('tap localPosition:    $localPosition');
-    setState(() {
-      safetyLocked = true;
-    });
+    setState(() => safetyLocked = true);
     canvas?.checkTapPosition(localPosition);
   }
 
   handlePan(Offset localPosition) {
-    // print(localPosition);
     canvas?.checkTapPosition(localPosition, isDrag: true);
   }
 
   handlePanDown(Offset localPosition) {
-    setState(() {
-      panDownPos = localPosition;
-    });
-    // print('pan down: $localPosition');
+    setState(() => panDownPos = localPosition);
   }
 
   handlePanUpdate(Offset localPosition) {
-    int toTheRight = localPosition.dx >= panDownPos!.dx ? 1 : -1;
-    int downFrom = localPosition.dy >= panDownPos!.dy ? 1 : -1;
-
     double width = localPosition.dx - panDownPos!.dx;
     double height = localPosition.dy - panDownPos!.dy;
 
     Rect rect = Offset(panDownPos!.dx, panDownPos!.dy) & Size(width, height);
-    // print('pan update: $localPosition');
     setState(() {
       panUpdatePos = localPosition;
       selectRect = rect;
@@ -172,49 +162,12 @@ class _PixelPageState extends State<PixelPage> {
     });
   }
 
-  // _GestureType _getGestureType(ScaleUpdateDetails details) {
-  //   final double scale = !widget.scaleEnabled ? 1.0 : details.scale;
-  //   final double rotation = !_rotateEnabled ? 0.0 : details.rotation;
-  //   if ((scale - 1).abs() > rotation.abs()) {
-  //     return _GestureType.scale;
-  //   } else if (rotation != 0.0) {
-  //     return _GestureType.rotate;
-  //   } else {
-  //     return _GestureType.pan;
-  //   }
-  // }
-
-  handleDrag(DragUpdateDetails details) {}
-
   handleStart(ScaleStartDetails details) {
-    print(
-        'pointerCound: ${details.pointerCount} focal point: ${details.focalPoint}   local focal point: ${details.localFocalPoint}');
+    canvas?.getCellOnOrNot(details.localFocalPoint);
   }
 
   handleUpdate(ScaleUpdateDetails details) {
-    // print(
-    // 'pointerCound: ${details.pointerCount} focal point: ${details.focalPoint}   local focal point: ${details.localFocalPoint} scale ${details.scale}');
-
     if (details.pointerCount == 1) {
-      // Offset newOffset = Offset(
-      //     details.localFocalPoint.dx -
-      //         (details.scale <= 1.0
-      //             ? 0
-      //             : details.localFocalPoint.dx / details.scale),
-      //     details.localFocalPoint.dy -
-      //         (details.scale <= 1.0
-      //             ? 0
-      //             : details.localFocalPoint.dy -
-      //                 (details.localFocalPoint.dy / details.scale)));
-
-      // if (details.scale > 1) {
-      //   // newOffset =
-      // }
-
-      // print(details.localFocalPoint.dx-(details.localFocalPoint.dx / ));
-
-      print(vector4?.row0);
-
       var newOffset =
           Offset(details.localFocalPoint.dx, details.localFocalPoint.dy);
       handlePan(newOffset);
@@ -280,57 +233,10 @@ class _PixelPageState extends State<PixelPage> {
             transformationController: transformController,
             onInteractionStart: (details) => handleStart(details),
             onInteractionUpdate: (details) => handleUpdate(details),
-            onInteractionEnd: (details) =>
-                print('velocity: ${details.velocity}'),
-
-            // onInteractionUpdate: canvas?.selectMode == false
-            //     ? (details) {
-            //         handlePan(details.localFocalPoint);
-            //       }
-            //     : null,
-
-            maxScale: 50,
+            onInteractionEnd: (details) => canvas?.setDragToNull(),
+            maxScale: 1,
             child: GestureDetector(
-              // onPanEnd: (details) =>
-              //     print('pan end: ${details.primaryVelocity}'),
-              // onHorizontalDragUpdate: (details) => handleDrag(details),
-              // onVerticalDragUpdate: (details) => handleDrag(details),
-              // onScaleUpdate: ,
-              // onScaleStart: (details) =>
-              //     print('on scale start ${details.pointerCount}'),
-              // onScaleUpdate: (details) => handlePan(details.localFocalPoint),
-              // onPanUpdate: canvas?.selectMode == true
-              //     ? (details) => handlePanUpdate(details.localPosition)
-              //     : null,
-              // onPanEnd: (details) =>
-              //     handlePanUp(details.velocity.pixelsPerSecond),
-              // onLongPress: canvas?.selectMode == false
-              //     ? () {
-              //         setState(() => toggleDrag = true);
-              //       }
-              //     : null,
-              // onLongPressStart: canvas?.selectMode == false
-              //     ? (details) {
-              //         print('long press start');
-              //         canvas?.setPanDownColor(details.localPosition);
-              //       }
-              //     : null,
-              // onLongPressMoveUpdate: toggleDrag && canvas?.selectMode == false
-              //     ? (details) {
-              //         handlePan(details.localPosition);
-              //       }
-              //     : null,
-              // onPanUpdate: toggleDrag && canvas?.selectMode == false
-              //     ? (details) {
-              //         handlePan(details.localPosition);
-              //       }
-              //     : null,
-              // onLongPressEnd: (_) => setState(() => toggleDrag = false),
-              onTapDown: (details) {
-                print(details.kind);
-                handleCanvasTap(details.localPosition);
-              },
-              // onTapUp: (details) => handleCanvasTap(details.localPosition),
+              onTapUp: (details) => handleCanvasTap(details.localPosition),
               child: CustomPaint(
                 size: Size(5000, 5000),
                 painter: CanvasPainter(
@@ -375,33 +281,6 @@ class _PixelPageState extends State<PixelPage> {
 
   List<Widget> _buildButtons(bool grid, BuildContext context) {
     return [
-      // Column(
-      //   children: [
-      //     ElevatedButton(
-      //       onPressed: undoPressed,
-      //       child: Icon(Icons.undo),
-      //       style: ButtonStyle(
-      //         minimumSize:
-      //             MaterialStateProperty.resolveWith((states) => Size(8, 8)),
-      //         backgroundColor: canvas?.canUndo == true
-      //             ? MaterialStateProperty.resolveWith((states) => Colors.red)
-      //             : null,
-      //       ),
-      //     ),
-      //     ElevatedButton(
-      //       onPressed: redoPressed,
-      //       child: Icon(Icons.redo),
-      //       style: ButtonStyle(
-      //         minimumSize:
-      //             MaterialStateProperty.resolveWith((states) => Size(8, 8)),
-      //         backgroundColor: canvas?.canRedo == true
-      //             ? MaterialStateProperty.resolveWith((states) => Colors.blue)
-      //             : null,
-      //       ),\
-
-      //     ),
-      //   ],
-      // ),
       ElevatedButton(
         onPressed: toggleSelectMode,
         child: Icon(Icons.select_all),

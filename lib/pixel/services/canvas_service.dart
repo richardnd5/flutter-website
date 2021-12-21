@@ -4,8 +4,9 @@ import 'package:flutter_website/pixel/models/cell.dart';
 import 'canvas_helper.dart';
 
 class CanvasService extends ChangeNotifier {
+  static Size globalCanvasSize = Size(14, 14);
   Size get gridDimensions => _gridDimensions;
-  Size _gridDimensions = Size(50, 50);
+  Size _gridDimensions = globalCanvasSize;
 
   double get cellSize => _cellSize;
   late double _cellSize = 40;
@@ -62,9 +63,10 @@ class CanvasService extends ChangeNotifier {
   int _editHistoryIndex = 0;
   List<List<Cell>> _currentCanvasEditHistory = [];
 
+  bool? dragStatus;
+
   setSelectMode(bool value) {
     _selectMode = value;
-    print(_selectMode);
     notifyListeners();
   }
 
@@ -135,6 +137,25 @@ class CanvasService extends ChangeNotifier {
   checkTapPosition(Offset localPosition, {bool isDrag = false}) =>
       _getCellAtPosition(localPosition, isDrag);
 
+  getCellOnOrNot(Offset localPosition) {
+    var foundCell = _currentCells.firstWhere(
+        (cell) => tapWithinOffset(
+            localPosition,
+            Offset(cell.gridPos!.dx * cellSize, cell.gridPos!.dy * cellSize),
+            cellSize),
+        orElse: () =>
+            Cell(color: Colors.black, gridPos: null, on: false, number: 0));
+
+    dragStatus = !foundCell.on;
+    print(dragStatus);
+    notifyListeners();
+  }
+
+  setDragToNull() {
+    dragStatus = null;
+    notifyListeners();
+  }
+
   _getCellAtPosition(Offset localPosition, bool isDrag) {
     var foundCell = _currentCells.firstWhere(
         (cell) => tapWithinOffset(
@@ -144,7 +165,12 @@ class CanvasService extends ChangeNotifier {
         orElse: () =>
             Cell(color: Colors.black, gridPos: null, on: false, number: 0));
     if (foundCell.gridPos != null) {
-      foundCell.on = isDrag ? panDownState : !foundCell.on;
+      if (dragStatus != null) {
+        foundCell.on = dragStatus!;
+      } else {
+        foundCell.on = !foundCell.on;
+      }
+      // foundCell.on = isDrag ? panDownState : !foundCell.on;
       _canvasSaved = false;
       saveToEditHistory();
       saveToCurrentSlot();
@@ -234,7 +260,6 @@ class CanvasService extends ChangeNotifier {
     loadBlankCanvas();
     _currentCells = _currentCanvasEditHistory[currentSelectedIndex];
     // draw previous cells
-
     _renderScreen();
   }
 
