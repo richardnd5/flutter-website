@@ -41,9 +41,6 @@ class CanvasService extends ChangeNotifier {
   bool get canvasSaved => _canvasSaved;
   bool _canvasSaved = true;
 
-  bool get saveOnEachChange => _saveOnEachChange;
-  bool _saveOnEachChange = false;
-
   bool get showPreviousFrame => _showPreviousFrame;
   bool _showPreviousFrame = true;
 
@@ -116,11 +113,6 @@ class CanvasService extends ChangeNotifier {
     notifyListeners();
   }
 
-  toggleSaveOnEachChange() {
-    _saveOnEachChange = !_saveOnEachChange;
-    notifyListeners();
-  }
-
   setPanDownColor(Offset localPosition) {
     var foundCell = _currentCells.firstWhere(
         (cell) => tapWithinOffset(
@@ -170,11 +162,9 @@ class CanvasService extends ChangeNotifier {
       } else {
         foundCell.on = !foundCell.on;
       }
-      // foundCell.on = isDrag ? panDownState : !foundCell.on;
       _canvasSaved = false;
       saveToEditHistory();
       saveToCurrentSlot();
-      if (saveOnEachChange) saveAndIncrement();
       _renderScreen();
       notifyListeners();
     }

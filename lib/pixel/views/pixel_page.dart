@@ -63,10 +63,6 @@ class _PixelPageState extends State<PixelPage> {
     }
   }
 
-  saveOnChangeToggle() {
-    Provider.of<CanvasService>(context, listen: false).toggleSaveOnEachChange();
-  }
-
   toggleShowPreviousFrame() {
     canvas?.toggleShowPreviousFrame();
   }
@@ -78,10 +74,6 @@ class _PixelPageState extends State<PixelPage> {
   playPressed() {
     ScaffoldMessenger.of(context).clearSnackBars();
     canvas?.playAnimation();
-  }
-
-  stopPressed() {
-    // canvas?.stopAnimation();
   }
 
   clearAnimation() {
@@ -177,7 +169,7 @@ class _PixelPageState extends State<PixelPage> {
   @override
   Widget build(BuildContext context) {
     var service = context.watch<CanvasService>();
-    bool saveOnEachChange = service.saveOnEachChange;
+
     bool showPreviousFrame = service.showPreviousFrame;
     bool grid = service.grid;
 
@@ -186,7 +178,7 @@ class _PixelPageState extends State<PixelPage> {
       child: SafeArea(
         child: Scaffold(
           drawerEnableOpenDragGesture: false,
-          drawer: buildDrawer(saveOnEachChange, showPreviousFrame, grid),
+          drawer: buildDrawer(showPreviousFrame, grid),
           appBar: AppBar(),
           floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
           floatingActionButton: Row(
@@ -281,17 +273,6 @@ class _PixelPageState extends State<PixelPage> {
 
   List<Widget> _buildButtons(bool grid, BuildContext context) {
     return [
-      ElevatedButton(
-        onPressed: toggleSelectMode,
-        child: Icon(Icons.select_all),
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.resolveWith((states) =>
-              canvas?.selectMode == false ? Colors.grey : Colors.purple),
-          minimumSize: MaterialStateProperty.resolveWith(
-            (states) => Size(8, 8),
-          ),
-        ),
-      ),
       Card(
         child: IntrinsicWidth(
           child: Padding(
@@ -349,7 +330,6 @@ class _PixelPageState extends State<PixelPage> {
   }
 
   Drawer buildDrawer(
-    bool saveOnEachChange,
     bool showPreviousFrame,
     bool grid,
   ) {
@@ -357,17 +337,6 @@ class _PixelPageState extends State<PixelPage> {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          ListTile(
-            title: Row(
-              children: [
-                Switch(
-                  value: saveOnEachChange,
-                  onChanged: (_) => saveOnChangeToggle(),
-                ),
-                Text('Save On Change'),
-              ],
-            ),
-          ),
           ListTile(
             title: Row(
               children: [
