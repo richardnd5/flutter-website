@@ -79,6 +79,7 @@ class _MusicPageState extends State<MusicPage> {
     var size = MediaQuery.of(context).size;
 
     return Stack(
+      alignment: Alignment.center,
       children: [
         Padding(
           padding: const EdgeInsets.only(top: 16),
@@ -102,71 +103,72 @@ class _MusicPageState extends State<MusicPage> {
             },
           ),
         ),
-        if (selectedOption != null)
-          Stack(
-            children: [
-              Align(
-                alignment: Alignment.center,
-                child: Stack(
-                  children: [
-                    Container(
-                      child: GestureDetector(
-                        onTap: () => setState(() => selectedOption = null),
-                        child: new BackdropFilter(
-                          filter:
-                              new ui.ImageFilter.blur(sigmaX: 3.0, sigmaY: 3.0),
-                          child: new Container(
-                            decoration: new BoxDecoration(
-                              color: Colors.black.withOpacity(0.2),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      alignment: Alignment.center,
-                      width: size.width,
-                      height: size.height / 2,
-                      child: VimeoVideo(
-                        url: selectedOption!.url,
-                        height: size.height / 2,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+        // if (selectedOption != null)
+        Container(
+          alignment: Alignment.topCenter,
+          width: size.width,
+          height: size.height / 2,
+          child: VimeoVideo(
+            url: VideoUrls.fred,
+            height: size.height / 2,
           ),
+        ),
+        // Stack(
+        //   children: [
+        //     Container(
+        //       child: GestureDetector(
+        //         onTap: () => setState(() => selectedOption = null),
+        //         child: new BackdropFilter(
+        //           filter: new ui.ImageFilter.blur(sigmaX: 3.0, sigmaY: 3.0),
+        //           child: new Container(
+        //             decoration: new BoxDecoration(
+        //               color: Colors.black.withOpacity(0.2),
+        //             ),
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //     Container(
+        //       alignment: Alignment.center,
+        //       width: size.width,
+        //       height: size.height / 2,
+        //       child: VimeoVideo(
+        //         url: selectedOption!.url,
+        //         height: size.height / 2,
+        //       ),
+        //     ),
+        //   ],
+        // ),
       ],
     );
   }
 
-  GridView _buildVimeoGrid() {
-    return GridView.count(
-      mainAxisSpacing: 16,
-      crossAxisSpacing: 16,
-      crossAxisCount: 2,
-      children: [
-        InkWell(
-          onTap: () => launchURL('https://soundcloud.com/just-noodlin'),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(16),
-            child: Container(
-              color: Colors.white,
-              child: Image.network(
-                'https://cdn2.iconfinder.com/data/icons/minimalism/512/soundcloud.png',
-                width: 64,
-                height: 64,
-              ),
-            ),
-          ),
-        ),
-        VimeoVideo(height: 400, url: VideoUrls.padThai),
-        VimeoVideo(height: 400, url: VideoUrls.fred),
-        VimeoVideo(height: 400, url: VideoUrls.home),
-        VimeoVideo(height: 400, url: VideoUrls.forUntoUs),
-        VimeoVideo(height: 400, url: VideoUrls.nunc),
-      ],
-    );
-  }
+  // GridView _buildVimeoGrid() {
+  //   return GridView.count(
+  //     mainAxisSpacing: 16,
+  //     crossAxisSpacing: 16,
+  //     crossAxisCount: 2,
+  //     children: [
+  //       InkWell(
+  //         onTap: () => launchURL('https://soundcloud.com/just-noodlin'),
+  //         child: ClipRRect(
+  //           borderRadius: BorderRadius.circular(16),
+  //           child: Container(
+  //             color: Colors.white,
+  //             child: Image.network(
+  //               'https://cdn2.iconfinder.com/data/icons/minimalism/512/soundcloud.png',
+  //               width: 64,
+  //               height: 64,
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //       VimeoVideo(height: 400, url: VideoUrls.padThai),
+  //       VimeoVideo(height: 400, url: VideoUrls.fred),
+  //       VimeoVideo(height: 400, url: VideoUrls.home),
+  //       VimeoVideo(height: 400, url: VideoUrls.forUntoUs),
+  //       VimeoVideo(height: 400, url: VideoUrls.nunc),
+  //     ],
+  //   );
+  // }
 }

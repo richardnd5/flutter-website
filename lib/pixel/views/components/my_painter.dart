@@ -1,33 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_website/pixel/models/cell.dart';
+import 'package:flutter_website/pixel/services/canvas_service.dart';
 
 class CanvasPainter extends CustomPainter {
-  const CanvasPainter(
-    this.cells, {
-    this.backgroundColor = Colors.white,
-    required this.cellSize,
-    this.gridLineWidth = 0.2,
-    this.gridToggle = false,
-    this.gridColor = Colors.blue,
-    required this.gridDimensions,
-    this.selectRect,
-  });
+  const CanvasPainter(this.service);
 
-  final Color backgroundColor;
-  final List<Cell> cells;
-  final double cellSize;
-  final bool gridToggle;
-  final Color gridColor;
-  final double gridLineWidth;
-  final Size gridDimensions;
-  final Rect? selectRect;
+  final CanvasService service;
 
   @override
   void paint(Canvas canvas, Size size) {
-    canvas.drawRect(Offset(0, 0) & size, Paint()..color = backgroundColor);
-    cells.asMap().forEach((index, cell) {
+    canvas.drawRect(Offset(0, 0) & size, Paint()..color = Colors.white);
+    service.currentScreen.asMap().forEach((index, cell) {
       var paint = Paint();
-      paint.strokeWidth = gridLineWidth;
+      paint.strokeWidth = service.gridLineWidth;
       paint.color = cell.on ? cell.color : Colors.transparent;
       paint.style = PaintingStyle.fill;
 
@@ -37,19 +21,12 @@ class CanvasPainter extends CustomPainter {
 
       canvas.drawRect(rect, paint);
 
-      if (gridToggle) {
+      if (service.grid) {
         var gridStroke = Paint();
-        gridStroke.strokeWidth = gridLineWidth;
-        gridStroke.color = gridColor;
+        gridStroke.strokeWidth = service.gridLineWidth;
+        gridStroke.color = Colors.blue;
         gridStroke.style = PaintingStyle.stroke;
         canvas.drawRect(rect, gridStroke);
-      }
-
-      if (selectRect != null) {
-        var paint = Paint()
-          ..color = Colors.purple.withAlpha(1)
-          ..style = PaintingStyle.fill;
-        canvas.drawRect(selectRect!, paint);
       }
     });
   }

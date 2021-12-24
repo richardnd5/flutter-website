@@ -62,6 +62,24 @@ class CanvasService extends ChangeNotifier {
 
   bool? dragStatus;
 
+  bool _safetyLocked = true;
+
+  bool get safetyLocked => _safetyLocked;
+
+  set safetyLocked(bool safetyLocked) {
+    _safetyLocked = safetyLocked;
+    notifyListeners();
+  }
+
+  bool _toggleDrag = false;
+
+  bool get toggleDrag => _toggleDrag;
+
+  set toggleDrag(bool toggleDrag) {
+    _toggleDrag = toggleDrag;
+    notifyListeners();
+  }
+
   setSelectMode(bool value) {
     _selectMode = value;
     notifyListeners();
@@ -139,7 +157,6 @@ class CanvasService extends ChangeNotifier {
             Cell(color: Colors.black, gridPos: null, on: false, number: 0));
 
     dragStatus = !foundCell.on;
-    print(dragStatus);
     notifyListeners();
   }
 
@@ -149,6 +166,7 @@ class CanvasService extends ChangeNotifier {
   }
 
   _getCellAtPosition(Offset localPosition, bool isDrag) {
+    print('getting cell at position');
     var foundCell = _currentCells.firstWhere(
         (cell) => tapWithinOffset(
             localPosition,
@@ -217,7 +235,7 @@ class CanvasService extends ChangeNotifier {
   }
 
   bool saveAndIncrement() {
-    if (!_canvasSaved /* && _currentCells.isNotEmpty */) {
+    if (!_canvasSaved) {
       addCurrentCellsToAnimationArray();
       _canvasSaved = true;
       makeNewFrame();
@@ -228,7 +246,10 @@ class CanvasService extends ChangeNotifier {
 
   saveToCurrentSlot() {
     _currentCanvasEditHistory[_editHistoryIndex] = _currentCells;
-    _canvasAnimation[currentSelectedIndex] = _currentCells;
+
+    if (_canvasAnimation.length > currentSelectedIndex) {
+      _canvasAnimation[currentSelectedIndex] = _currentCells;
+    }
   }
 
   saveToEditHistory() {

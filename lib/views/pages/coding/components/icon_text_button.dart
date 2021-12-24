@@ -1,4 +1,4 @@
-import 'dart:js' as js;
+// import 'dart:js' as js;
 import 'package:flutter/material.dart';
 
 class IconTextButton extends StatelessWidget {
@@ -88,5 +88,5 @@ class IconTextButton extends StatelessWidget {
 }
 
 void launchURL(String url) async {
-  js.context.callMethod('open', [url]);
+  // js.context.callMethod('open', [url]);
 }
