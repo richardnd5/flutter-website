@@ -21,6 +21,10 @@ class GameOfLifePainter extends CustomPainter {
     double squareWidth = screenSize.width / divider;
     double squareHeight = screenSize.height / divider;
 
+    drawGrid(squareWidth, squareHeight, canvas);
+  }
+
+  void drawGrid(double squareWidth, double squareHeight, Canvas canvas) {
     dotList.asMap().forEach((i, row) {
       row.asMap().forEach((j, column) {
         if (column == 1) {

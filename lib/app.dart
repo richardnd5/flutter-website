@@ -31,7 +31,7 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: PolarPlayPage(),
+      home: GameOfLifePage(),
     );
     return MaterialApp.router(
       routeInformationParser: NavRouteParser.of(context),

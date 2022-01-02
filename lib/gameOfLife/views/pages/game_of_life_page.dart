@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_website/gameOfLife/services/game_of_life_service.dart';
+import 'package:flutter_website/pixel/views/components/two_finger_interactive_viewer.dart';
+import 'package:flutter_website/views/helpers/page_gradient.dart';
 import 'package:provider/provider.dart';
 import '../components/game_of_life_painter.dart';
 
@@ -88,24 +90,32 @@ class _GameOfLifePageState extends State<GameOfLifePage> {
 
     double sliderValue = context.watch<GameOfLifeService>().sliderValue;
 
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: ListView(
-        shrinkWrap: true,
-        children: [
-          _buildHeading(),
-          if (grid != null) _buildPainter(painterSize!, grid),
-          _buildLowerSection(generationCount, context, timerValue, sliderValue),
-        ],
+    return Container(
+      decoration: pageGradient(Colors.blue, Colors.lightBlue),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("Epic Conway's Game of Life"),
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              _buildPainter(painterSize!, grid),
+              _buildLowerSection(
+                  generationCount, context, timerValue, sliderValue),
+            ],
+          ),
+        ),
       ),
     );
   }
 
   Center _buildPainter(Size painterSize, List<List<int>> grid) {
     return Center(
-      child: GestureDetector(
-        onTapUp: (details) => _handleTap(context, grid, details),
-        child: Card(
+      child: TwoFingerInteractiveViewer(
+        maxScale: 10,
+        minScale: 1,
+        child: GestureDetector(
+          onTapUp: (details) => _handleTap(context, grid, details),
           child: CustomPaint(
             size: painterSize,
             painter: GameOfLifePainter(
@@ -120,83 +130,93 @@ class _GameOfLifePageState extends State<GameOfLifePage> {
     );
   }
 
-  Padding _buildHeading() {
-    return Padding(
-      padding: EdgeInsets.all(16),
-      child: Text(
-        "Epic Conway's Game of Life",
-        style: TextStyle(
-          fontSize: 32,
-          color: Colors.white,
-        ),
-        textAlign: TextAlign.center,
-      ),
-    );
-  }
-
-  Card _buildLowerSection(
+  Widget _buildLowerSection(
     int generationCount,
     BuildContext context,
     int timerValue,
     double sliderValue,
   ) {
-    var sliderRange = Provider.of<GameOfLifeService>(context).sliderRange;
-
-    return Card(
+    var watched = context.watch<GameOfLifeService>();
+    var sliderRange = watched.sliderRange;
+    return Padding(
+      padding: const EdgeInsets.all(8),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 16),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(width: 60),
-              Text('Generation:'),
-              SizedBox(width: 8),
-              SizedOverflowBox(
-                size: Size(100, 26),
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  '$generationCount',
-                  textAlign: TextAlign.start,
-                  overflow: TextOverflow.fade,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  'Run',
+                  style: Theme.of(context).textTheme.headline5,
                 ),
-              ),
-            ],
-          ),
-          SizedBox(height: 8),
-          ElevatedButton(
-            onPressed: _generateRandomGrid,
-            child: Text('Generate Another Random Grid'),
-          ),
-          SizedBox(height: 8),
-          ElevatedButton(
-            onPressed: context.watch<GameOfLifeService>().simulationOn
-                ? null
-                : () => _setNextState(),
-            child: Text('Go to next generation'),
-          ),
-          SizedBox(height: 16),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('Run Simulation'),
-              Switch(
-                value: context.watch<GameOfLifeService>().simulationOn,
-                onChanged: _handleToggle,
-              )
-            ],
+                Switch(
+                  value: watched.simulationOn,
+                  onChanged: _handleToggle,
+                ),
+                ElevatedButton(
+                  onPressed:
+                      watched.simulationOn ? null : () => _setNextState(),
+                  child: Icon(Icons.next_plan),
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                    minimumSize: Size(32, 32),
+                    maximumSize: Size(32, 32),
+                  ),
+                ),
+              ],
+            ),
           ),
           Slider(
             min: sliderRange.lowerBound,
             max: sliderRange.upperBound,
             value: sliderValue,
-            onChanged: (value) => _handleSlider(value),
+            onChanged: _handleSlider,
           ),
           Padding(
             padding: EdgeInsets.only(bottom: 16),
-            child: Text(
-              '$timerValue ms per generation',
-              textAlign: TextAlign.center,
+            child: SizedBox(
+              width: double.infinity,
+              child: Text(
+                '$timerValue ms per generation',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.caption,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: 32,
+                  child: Text(
+                    'Generation: ',
+                    style: Theme.of(context).textTheme.headline5,
+                  ),
+                ),
+                Container(
+                  height: 32,
+                  alignment: Alignment.center,
+                  child: Text(
+                    '$generationCount',
+                    overflow: TextOverflow.fade,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 8),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: ElevatedButton(
+              onPressed: _generateRandomGrid,
+              child: Icon(Icons.restore),
+              style: ElevatedButton.styleFrom(primary: Colors.green),
             ),
           ),
         ],

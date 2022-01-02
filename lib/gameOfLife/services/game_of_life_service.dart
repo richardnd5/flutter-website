@@ -11,10 +11,10 @@ class GameOfLifeService extends ChangeNotifier {
   int _generationCount = 0;
 
   int get columns => _columns;
-  int _columns = 150;
+  int _columns = 15;
 
   int get rows => _rows;
-  int _rows = 150;
+  int _rows = 15;
 
   Timer? _timer;
   int timerValue = 300;
@@ -30,7 +30,9 @@ class GameOfLifeService extends ChangeNotifier {
 
   createRandomGrid() {
     _grid = List.generate(
-        _columns, (_) => List.generate(rows, (_) => getRandomInt()));
+      _columns,
+      (_) => List.generate(rows, (_) => getRandomState()),
+    );
     _generationCount = 0;
     handleSlider(_sliderValue);
     notifyListeners();
@@ -47,10 +49,13 @@ class GameOfLifeService extends ChangeNotifier {
             var state = _grid[i][j];
             var neighbors = countNeighbors(_grid, i, j);
             if (state == 0 && neighbors == 3) {
+              // if cell is off and has 3 neighbors
               newArray[i][j] = 1;
             } else if (state == 1 && (neighbors < 2 || neighbors > 3)) {
+              // if cell is on and has 'too few' or 'too many' neighbors
               newArray[i][j] = 0;
             } else {
+              // keep the cell the same
               newArray[i][j] = state;
             }
           },
@@ -66,7 +71,9 @@ class GameOfLifeService extends ChangeNotifier {
   setNewTimerValue() {
     _timer?.cancel();
     _timer = Timer.periodic(
-        Duration(milliseconds: timerValue), (timer) => setNextState());
+      Duration(milliseconds: timerValue),
+      (timer) => setNextState(),
+    );
   }
 
   stopTimer() {
@@ -86,9 +93,7 @@ class GameOfLifeService extends ChangeNotifier {
         Rescale(from: ClosedRange(0, 500), to: ClosedRange(300, 4))
             .rescale(value);
     timerValue = rescaledValue.toInt();
-    if (simulationOn) {
-      setNewTimerValue();
-    }
+    if (simulationOn) setNewTimerValue();
     notifyListeners();
   }
 
@@ -107,9 +112,9 @@ class GameOfLifeService extends ChangeNotifier {
     return sum;
   }
 
-  int getRandomInt() {
+  int getRandomState({int percentChanceOn = 20}) {
     var random = Random();
-    var randomNum = random.nextInt(10);
-    return randomNum < 2 ? 1 : 0;
+    var randomNum = random.nextInt(100);
+    return randomNum < percentChanceOn ? 1 : 0;
   }
 }
