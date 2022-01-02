@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <!--
     If you are serving your web app in a path other than the root, change the
@@ -25,8 +26,61 @@
 
   <title>flutter_website</title>
   <link rel="manifest" href="manifest.json">
+
+  <style>
+    .loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+    }
+
+    .loader {
+      border: 8px solid #f3f3f3;
+      border-radius: 50%;
+      border: 15px solid;
+      border-top: 8px solid blue;
+      border-right: 8px solid white;
+      border-bottom: 8px solid blue;
+      border-left: 8px solid white;
+      width: 60px;
+      height: 60px;
+      -webkit-animation: spin 2s linear infinite;
+      animation: spin 2s linear infinite;
+    }
+
+    @-webkit-keyframes spin {
+      0% {
+        -webkit-transform: rotate(0deg);
+      }
+
+      100% {
+        -webkit-transform: rotate(360deg);
+      }
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
 </head>
+
 <body>
+
+  <div class="loading">
+    <div class="loader"></div>
+  </div>
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
@@ -41,7 +95,17 @@
       var scriptTag = document.createElement('script');
       scriptTag.src = 'main.dart.js';
       scriptTag.type = 'application/javascript';
+      scriptTag.id = 'main'
       document.body.append(scriptTag);
+
+      var noodleTag = document.createElement('noodle');
+      noodleTag.innerHTML = 'Wow!';
+      noodleTag.id = 'wow'
+      document.body.append(noodleTag)
+
+      document.getElementById('wow').style.zIndex = "2";
+      document.getElementById('main').style.zIndex = "1";
+
     }
 
     if ('serviceWorker' in navigator) {
@@ -95,4 +159,5 @@
     }
   </script>
 </body>
+
 </html>

@@ -40,5 +40,8 @@ final appProviders = [
   ),
   ChangeNotifierProvider(create: (_) => SoundService()),
   ChangeNotifierProvider(create: (_) => CanvasService()),
-  ChangeNotifierProvider(create: (context) => GameOfLifeService()),
+  ChangeNotifierProvider(
+    create: (context) => GameOfLifeService(),
+    lazy: false,
+  ),
 ];

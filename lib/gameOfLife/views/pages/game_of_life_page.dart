@@ -111,7 +111,7 @@ class _GameOfLifePageState extends State<GameOfLifePage> {
             painter: GameOfLifePainter(
               screenSize: painterSize,
               columns: grid.length,
-              rows: grid[0].length,
+              rows: grid.isEmpty ? 0 : grid[0].length,
               dotList: grid,
             ),
           ),
