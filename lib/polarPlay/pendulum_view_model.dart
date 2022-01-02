@@ -11,6 +11,9 @@ class PendulumViewModel extends ChangeNotifier {
   late double length;
   late Offset bob;
 
+  double aVel = 0.0;
+  double aAcc = 0.0;
+
   Timer? timer;
 
   PendulumViewModel(this.size) {
@@ -26,13 +29,19 @@ class PendulumViewModel extends ChangeNotifier {
 
   setBobPos() {
     bob = Offset(
-        origin.dx + length * sin(angle), origin.dy + length * cos(angle));
+      origin.dx + length * sin(angle),
+      origin.dy + length * cos(angle),
+    );
     notifyListeners();
   }
 
   startTimer() {
     timer = Timer.periodic(Duration(milliseconds: 17), (timer) {
-      angle += 0.1;
+      aAcc = -0.01 * sin(angle);
+      angle += aVel;
+      aVel += aAcc;
+      aVel *= 0.99;
+
       setBobPos();
       notifyListeners();
     });
