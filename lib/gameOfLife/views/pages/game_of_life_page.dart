@@ -74,15 +74,7 @@ class _GameOfLifePageState extends State<GameOfLifePage> {
   Widget build(BuildContext context) {
     screenSize = MediaQuery.of(context).size;
 
-    painterSize = screenSize!.width < screenSize!.height
-        ? Size(
-            screenSize!.width - padding,
-            screenSize!.width - padding,
-          )
-        : Size(
-            screenSize!.height * .8 - padding,
-            screenSize!.height * .8 - padding,
-          );
+    _setPainterSize();
 
     var grid = context.watch<GameOfLifeService>().grid;
     var timerValue = context.watch<GameOfLifeService>().timerValue;
@@ -100,13 +92,25 @@ class _GameOfLifePageState extends State<GameOfLifePage> {
           child: Column(
             children: [
               _buildPainter(painterSize!, grid),
-              _buildLowerSection(
+              _buildOptionsSection(
                   generationCount, context, timerValue, sliderValue),
             ],
           ),
         ),
       ),
     );
+  }
+
+  void _setPainterSize() {
+    painterSize = screenSize!.width < screenSize!.height
+        ? Size(
+            screenSize!.width - padding,
+            screenSize!.width - padding,
+          )
+        : Size(
+            screenSize!.height * .8 - padding,
+            screenSize!.height * .8 - padding,
+          );
   }
 
   Center _buildPainter(Size painterSize, List<List<int>> grid) {
@@ -130,7 +134,7 @@ class _GameOfLifePageState extends State<GameOfLifePage> {
     );
   }
 
-  Widget _buildLowerSection(
+  Widget _buildOptionsSection(
     int generationCount,
     BuildContext context,
     int timerValue,
@@ -213,10 +217,14 @@ class _GameOfLifePageState extends State<GameOfLifePage> {
           SizedBox(height: 8),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: ElevatedButton(
-              onPressed: _generateRandomGrid,
-              child: Icon(Icons.restore),
-              style: ElevatedButton.styleFrom(primary: Colors.green),
+            child: Row(
+              children: [
+                ElevatedButton(
+                  onPressed: _generateRandomGrid,
+                  child: Icon(Icons.restore),
+                  style: ElevatedButton.styleFrom(primary: Colors.green),
+                ),
+              ],
             ),
           ),
         ],
