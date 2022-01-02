@@ -20,7 +20,7 @@ class PolarPlayViewModel extends ChangeNotifier {
     radius = screenSize.width / 3;
     angle = math.pi / 4;
     setCoords();
-    moveAroundCircle();
+    // moveAroundCircle();
   }
 
   moveAroundCircle() {
