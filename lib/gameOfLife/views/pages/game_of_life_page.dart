@@ -13,30 +13,18 @@ class GameOfLifePage extends StatefulWidget {
 }
 
 class _GameOfLifePageState extends State<GameOfLifePage> {
-  double padding = 8;
   Size? painterSize;
   Size? screenSize;
 
+  GameOfLifeService? game;
+
   @override
   void initState() {
-    WidgetsBinding.instance?.addPostFrameCallback((_) => _generateRandomGrid());
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      game = Provider.of<GameOfLifeService>(context, listen: false);
+      game?.createRandomGrid();
+    });
     super.initState();
-  }
-
-  _generateRandomGrid() {
-    Provider.of<GameOfLifeService>(context, listen: false).createRandomGrid();
-  }
-
-  _setNextState() {
-    Provider.of<GameOfLifeService>(context, listen: false).setNextState();
-  }
-
-  _handleToggle(bool state) {
-    Provider.of<GameOfLifeService>(context, listen: false).handleToggle(state);
-  }
-
-  _handleSlider(double value) {
-    Provider.of<GameOfLifeService>(context, listen: false).handleSlider(value);
   }
 
   _handleTap(
@@ -103,14 +91,8 @@ class _GameOfLifePageState extends State<GameOfLifePage> {
 
   void _setPainterSize() {
     painterSize = screenSize!.width < screenSize!.height
-        ? Size(
-            screenSize!.width - padding,
-            screenSize!.width - padding,
-          )
-        : Size(
-            screenSize!.height * .8 - padding,
-            screenSize!.height * .8 - padding,
-          );
+        ? Size(screenSize!.width, screenSize!.width)
+        : Size(screenSize!.height * .8, screenSize!.height * .8);
   }
 
   Center _buildPainter(Size painterSize, List<List<int>> grid) {
@@ -158,11 +140,11 @@ class _GameOfLifePageState extends State<GameOfLifePage> {
                 ),
                 Switch(
                   value: watched.simulationOn,
-                  onChanged: _handleToggle,
+                  onChanged: game?.handleToggle,
                 ),
                 ElevatedButton(
                   onPressed:
-                      watched.simulationOn ? null : () => _setNextState(),
+                      watched.simulationOn ? null : () => game?.setNextState(),
                   child: Icon(Icons.next_plan),
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.zero,
@@ -177,7 +159,7 @@ class _GameOfLifePageState extends State<GameOfLifePage> {
             min: sliderRange.lowerBound,
             max: sliderRange.upperBound,
             value: sliderValue,
-            onChanged: _handleSlider,
+            onChanged: game?.handleSlider,
           ),
           Padding(
             padding: EdgeInsets.only(bottom: 16),
@@ -220,7 +202,7 @@ class _GameOfLifePageState extends State<GameOfLifePage> {
             child: Row(
               children: [
                 ElevatedButton(
-                  onPressed: _generateRandomGrid,
+                  onPressed: game?.createRandomGrid,
                   child: Icon(Icons.restore),
                   style: ElevatedButton.styleFrom(primary: Colors.green),
                 ),
