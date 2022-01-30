@@ -61,6 +61,7 @@ class _GameOfLifePageState extends State<GameOfLifePage> {
   @override
   Widget build(BuildContext context) {
     screenSize = MediaQuery.of(context).size;
+    var watched = context.watch<GameOfLifeService>();
 
     _setPainterSize();
 
@@ -74,7 +75,43 @@ class _GameOfLifePageState extends State<GameOfLifePage> {
       decoration: pageGradient(Colors.blue, Colors.lightBlue),
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Epic Conway's Game of Life"),
+          toolbarHeight: 80,
+          title: Column(
+            children: [
+              Text("Epic Conway's Game of Life"),
+              SizedBox(height: 4),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Run',
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline6
+                        ?.copyWith(color: Colors.white),
+                  ),
+                  Switch(
+                    value: watched.simulationOn,
+                    onChanged: game?.handleToggle,
+                  ),
+                  ElevatedButton(
+                    onPressed: watched.simulationOn
+                        ? null
+                        : () => game?.setNextState(),
+                    child: Icon(
+                      Icons.next_plan,
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.zero,
+                      minimumSize: Size(32, 32),
+                      maximumSize: Size(32, 32),
+                      primary: Colors.lightBlueAccent,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -97,19 +134,15 @@ class _GameOfLifePageState extends State<GameOfLifePage> {
 
   Center _buildPainter(Size painterSize, List<List<int>> grid) {
     return Center(
-      child: TwoFingerInteractiveViewer(
-        maxScale: 10,
-        minScale: 1,
-        child: GestureDetector(
-          onTapUp: (details) => _handleTap(context, grid, details),
-          child: CustomPaint(
-            size: painterSize,
-            painter: GameOfLifePainter(
-              screenSize: painterSize,
-              columns: grid.length,
-              rows: grid.isEmpty ? 0 : grid[0].length,
-              dotList: grid,
-            ),
+      child: GestureDetector(
+        onTapUp: (details) => _handleTap(context, grid, details),
+        child: CustomPaint(
+          size: painterSize,
+          painter: GameOfLifePainter(
+            screenSize: painterSize,
+            columns: grid.length,
+            rows: grid.isEmpty ? 0 : grid[0].length,
+            dotList: grid,
           ),
         ),
       ),
@@ -131,29 +164,6 @@ class _GameOfLifePageState extends State<GameOfLifePage> {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  'Run',
-                  style: Theme.of(context).textTheme.headline5,
-                ),
-                Switch(
-                  value: watched.simulationOn,
-                  onChanged: game?.handleToggle,
-                ),
-                ElevatedButton(
-                  onPressed:
-                      watched.simulationOn ? null : () => game?.setNextState(),
-                  child: Icon(Icons.next_plan),
-                  style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.zero,
-                    minimumSize: Size(32, 32),
-                    maximumSize: Size(32, 32),
-                  ),
-                ),
-              ],
-            ),
           ),
           Slider(
             min: sliderRange.lowerBound,

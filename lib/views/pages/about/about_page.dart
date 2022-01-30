@@ -39,12 +39,16 @@ class _AboutPageState extends State<AboutPage> {
 }
 
 class FadeInOnInitWidget extends StatefulWidget {
-  const FadeInOnInitWidget(
-      {Key? key, required this.child, required this.isVisible})
-      : super(key: key);
+  const FadeInOnInitWidget({
+    Key? key,
+    required this.child,
+    required this.isVisible,
+    this.duration,
+  }) : super(key: key);
   final Widget child;
 
   final bool isVisible;
+  final Duration? duration;
   @override
   State<FadeInOnInitWidget> createState() => _FadeInOnInitWidgetState();
 }
@@ -74,7 +78,8 @@ class _FadeInOnInitWidgetState extends State<FadeInOnInitWidget> {
               ? 1.0
               : 0.0
           : 0.0,
-      duration: Duration(milliseconds: widget.isVisible ? 500 : 200),
+      duration: widget.duration ??
+          Duration(milliseconds: widget.isVisible ? 500 : 200),
       child: widget.child,
     );
   }
