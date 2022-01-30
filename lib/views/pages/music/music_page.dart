@@ -130,7 +130,7 @@ class _MusicPageState extends State<MusicPage> {
             ),
           ),
           FadeInOnInitWidget(
-            isVisible: controllerLoading,
+            isVisible: controllerLoading && selectedOption != null,
             duration: const Duration(milliseconds: 60),
             child: const Center(child: CircularProgressIndicator()),
           ),
