@@ -75,6 +75,7 @@ class _GameOfLifePageState extends State<GameOfLifePage> {
       decoration: pageGradient(Colors.blue, Colors.lightBlue),
       child: Scaffold(
         appBar: AppBar(
+          leading: Container(),
           toolbarHeight: 80,
           title: Column(
             children: [

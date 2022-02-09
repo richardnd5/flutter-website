@@ -30,8 +30,7 @@ class NavRouteParser extends RouteInformationParser<PageConfig> {
       }
       if (uri?.pathSegments[0].contains('gameOfLife') == true) {
         state.selectedPage = CustomPages.gameOfLife;
-      } else {
-        state.selectedPage = CustomPages.home;
+        return SynchronousFuture(gameOfLifePageConfig);
       }
       if (uri?.pathSegments[0].contains('music') == true) {
         vm.selectedPage = PageType.music;
@@ -55,8 +54,6 @@ class NavRouteParser extends RouteInformationParser<PageConfig> {
 
   @override
   RouteInformation? restoreRouteInformation(PageConfig configuration) {
-    print(configuration.path);
-    print(vm.selectedPage);
     return RouteInformation(location: configuration.path);
   }
 }

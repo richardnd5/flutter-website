@@ -12,11 +12,7 @@ class NavState extends ChangeNotifier {
   List<PageConfig> pixelPages = [homePageConfig, pixelPageConfig];
   List<PageConfig> gameOfLifePages = [homePageConfig, gameOfLifePageConfig];
 
-  bool _showPixel = false;
-  bool get showPixel => _showPixel;
-  set showPixel(bool pixel) {
-    _showPixel = pixel;
-  }
+  bool showPixel = false;
 
   CustomPages selectedPage = CustomPages.home;
 
@@ -29,10 +25,6 @@ class NavState extends ChangeNotifier {
       case CustomPages.gameOfLife:
         return gameOfLifePages.map((e) => e.page).toList();
     }
-
-    // return showPixel
-    //     ? pixelPages.map((e) => e.page).toList()
-    //     : [homePageConfig.page];
   }
 
   setNewRoutePath(PageConfig config) {
