@@ -21,7 +21,7 @@ final soundCloudOption = WebLinkOption(
 );
 
 class _MusicPageState extends State<MusicPage> {
-  late VideoPlayerController _controller;
+  VideoPlayerController? _controller;
 
   final pageType = PageType.music;
   bool controllerLoading = false;
@@ -55,7 +55,7 @@ class _MusicPageState extends State<MusicPage> {
   @override
   void dispose() {
     super.dispose();
-    _controller.dispose();
+    _controller?.dispose();
   }
 
   int getCrossAxisCount(double width) {
@@ -142,17 +142,18 @@ class _MusicPageState extends State<MusicPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      if (_controller.value.isInitialized)
+                      if (_controller != null &&
+                          _controller!.value.isInitialized)
                         Container(
                           color: Colors.black.withOpacity(0.7),
                           child: AspectRatio(
-                            aspectRatio: _controller.value.size.height >
-                                    _controller.value.size.width
-                                ? _controller.value.size.height /
-                                    _controller.value.size.width
-                                : _controller.value.size.width /
-                                    _controller.value.size.height,
-                            child: VideoPlayer(_controller),
+                            aspectRatio: _controller!.value.size.height >
+                                    _controller!.value.size.width
+                                ? _controller!.value.size.height /
+                                    _controller!.value.size.width
+                                : _controller!.value.size.width /
+                                    _controller!.value.size.height,
+                            child: VideoPlayer(_controller!),
                           ),
                         ),
                       const SizedBox(height: 16),
@@ -164,24 +165,24 @@ class _MusicPageState extends State<MusicPage> {
                             child: ElevatedButton(
                               onPressed: () => setState(
                                 () {
-                                  _controller.value.isPlaying
-                                      ? _controller.pause()
-                                      : _controller.play();
+                                  _controller?.value.isPlaying == true
+                                      ? _controller?.pause()
+                                      : _controller?.play();
                                 },
                               ),
                               child: Icon(
-                                _controller.value.isPlaying
+                                _controller?.value.isPlaying == true
                                     ? Icons.pause
                                     : Icons.play_arrow,
                               ),
                             ),
                           ),
-                          if (_controller.value.isInitialized)
+                          if (_controller?.value.isInitialized == true)
                             Expanded(
                               child: SizedBox(
                                 height: 45,
                                 child: VideoProgressIndicator(
-                                  _controller,
+                                  _controller!,
                                   allowScrubbing: true,
                                   padding: EdgeInsets.zero,
                                 ),

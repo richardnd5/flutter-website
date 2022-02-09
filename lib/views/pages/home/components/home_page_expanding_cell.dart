@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_website/global/page_config_function.dart';
 import 'package:flutter_website/navigation/nav_state.dart';
 import 'package:flutter_website/views/pages/home/home_page_view_model.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -7,7 +8,6 @@ import 'package:provider/provider.dart';
 class HomePageExpandingCell extends StatelessWidget {
   const HomePageExpandingCell(this.type, {Key? key}) : super(key: key);
 
-  // final double smallPercent = 0.1;
   final double smallSize = 70;
   final double expandedHeightScale = 0.9;
   final double largeWidth = 1;
@@ -18,21 +18,7 @@ class HomePageExpandingCell extends StatelessWidget {
   final PageType type;
 
   _goToPage(BuildContext context, PageType type) {
-    PageConfig selectedConfig;
-    switch (type) {
-      case PageType.coding:
-        selectedConfig = codingPageConfig;
-        break;
-      case PageType.about:
-        selectedConfig = aboutPageConfig;
-        break;
-      case PageType.music:
-        selectedConfig = musicPageConfig;
-        break;
-      case PageType.contact:
-        selectedConfig = contactPageConfig;
-        break;
-    }
+    PageConfig selectedConfig = getPageConfig(type);
 
     Provider.of<HomePageViewModel>(context, listen: false).selectedPage = type;
     Provider.of<NavState>(context, listen: false).goTo(selectedConfig);
@@ -123,7 +109,7 @@ class HomePageExpandingCell extends StatelessWidget {
                                     padding: const EdgeInsets.only(top: 16),
                                     child: Text(
                                       type.getName(),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 24,
                                         fontWeight: FontWeight.w600,
                                       ),

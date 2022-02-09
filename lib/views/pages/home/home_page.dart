@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_website/navigation/nav_state.dart';
 import 'package:flutter_website/views/helpers/page_gradient.dart';
 import 'package:flutter_website/views/constants/static_colors.dart';
+import 'package:flutter_website/views/pages/about/about_page.dart';
 import 'package:flutter_website/views/pages/home/components/home_page_expanding_cell.dart';
 import 'package:provider/provider.dart';
 import 'home_page_view_model.dart';
@@ -24,14 +25,17 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        _buildBackground(context),
-        HomePageExpandingCell(PageType.about),
-        HomePageExpandingCell(PageType.contact),
-        HomePageExpandingCell(PageType.music),
-        HomePageExpandingCell(PageType.coding),
-      ],
+    return FadeInOnInitWidget(
+      isVisible: true,
+      child: Stack(
+        children: [
+          _buildBackground(context),
+          const HomePageExpandingCell(PageType.about),
+          const HomePageExpandingCell(PageType.contact),
+          const HomePageExpandingCell(PageType.music),
+          const HomePageExpandingCell(PageType.coding),
+        ],
+      ),
     );
   }
 

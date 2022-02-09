@@ -8,7 +8,6 @@ import 'package:flutter_website/pixel/services/canvas_service.dart';
 import 'package:flutter_website/pixel/services/sound_service.dart';
 import 'package:flutter_website/views/pages/home/home_page_view_model.dart';
 import 'package:provider/provider.dart';
-import 'package:url_strategy/url_strategy.dart';
 
 final appProviders = [
   ChangeNotifierProvider(
@@ -16,7 +15,9 @@ final appProviders = [
     lazy: false,
   ),
   ChangeNotifierProvider(
-    create: (context) => HomePageViewModel(),
+    create: (context) => HomePageViewModel(
+      Provider.of<NavState>(context, listen: false),
+    ),
     lazy: false,
   ),
   ChangeNotifierProxyProvider<NavState, NavRouterDelegate>(

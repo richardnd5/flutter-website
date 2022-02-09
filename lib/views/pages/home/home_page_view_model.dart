@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_website/enums/page_type.dart';
+import 'package:flutter_website/global/page_config_function.dart';
+import 'package:flutter_website/navigation/nav_state.dart';
 import 'package:provider/provider.dart';
 export 'package:flutter_website/enums/page_type.dart';
 
 class HomePageViewModel extends ChangeNotifier {
-  HomePageViewModel();
+  NavState navState;
+  HomePageViewModel(this.navState);
 
   static HomePageViewModel of(BuildContext context) {
     return Provider.of<HomePageViewModel>(context, listen: false);
@@ -24,6 +27,9 @@ class HomePageViewModel extends ChangeNotifier {
   set selectedPage(PageType? page) {
     if (hasInitialized) {
       _selectedPage = page;
+      if (page != null) {
+        navState.goTo(getPageConfig(page));
+      }
       notifyListeners();
     }
   }

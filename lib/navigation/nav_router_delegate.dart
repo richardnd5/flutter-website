@@ -27,7 +27,7 @@ class NavRouterDelegate extends RouterDelegate<PageConfig>
 
   @override
   Future<void> setNewRoutePath(PageConfig configuration) async {
-    return null;
+    return;
   }
 
   @override

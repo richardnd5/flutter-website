@@ -1,5 +1,7 @@
 // import 'dart:html';
 
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_website/gameOfLife/views/pages/game_of_life_page.dart';
 import 'package:flutter_website/navigation/nav_router_delegate.dart';
@@ -21,19 +23,14 @@ class _AppState extends State<App> {
   void initState() {
     super.initState();
 
-    // final loader = document.getElementsByClassName('loading');
-    // if (loader.isNotEmpty) {
-    //   print('removing');
-    //   loader.first.remove();
-    // }
+    final spinner = document.getElementsByClassName('spinner');
+    if (spinner.isNotEmpty) spinner.first.remove();
   }
 
   @override
   Widget build(BuildContext context) {
-    // return MaterialApp(
-    //   home: GameOfLifePage(),
-    // );
     return MaterialApp.router(
+      title: "Nathan's Website",
       routeInformationParser: NavRouteParser.of(context),
       routerDelegate: NavRouterDelegate.of(context),
       theme: ThemeData(
