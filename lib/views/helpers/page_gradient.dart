@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 pageGradient(Color color1, Color color2) => BoxDecoration(
       gradient: LinearGradient(
-        begin: Alignment.topRight,
-        end: Alignment.bottomLeft,
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
         colors: [color1, color2],
       ),
     );

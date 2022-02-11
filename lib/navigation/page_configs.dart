@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_website/gameOfLife/views/pages/game_of_life_page.dart';
 import 'package:flutter_website/navigation/fade_page.dart';
+import 'package:flutter_website/pixel/views/pages/pixel_page.dart';
+import 'package:flutter_website/ticTacToe/ui/tic_tac_toe_page.dart';
 import 'package:flutter_website/views/pages/about/about_page.dart';
 import 'package:flutter_website/views/pages/coding/coding_page.dart';
 import 'package:flutter_website/views/pages/contact/contact_page.dart';
@@ -34,6 +37,24 @@ final aboutPageConfig = PageConfig(
   path: '/about',
   page: const FadePage(
     child: AboutPage(),
+  ),
+);
+final pixelPageConfig = PageConfig(
+  path: '/pixel',
+  page: const FadePage(
+    child: PixelPage(),
+  ),
+);
+final gameOfLifePageConfig = PageConfig(
+  path: '/gameOfLife',
+  page: const FadePage(
+    child: GameOfLifePage(),
+  ),
+);
+final ticTacToePageConfig = PageConfig(
+  path: '/ticTicToe',
+  page: const FadePage(
+    child: TicTacToePage(),
   ),
 );
 final unknownPageConfig = PageConfig(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_website/global/page_config_function.dart';
 import 'package:flutter_website/navigation/nav_state.dart';
 import 'package:flutter_website/views/pages/home/home_page_view_model.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -7,7 +8,6 @@ import 'package:provider/provider.dart';
 class HomePageExpandingCell extends StatelessWidget {
   const HomePageExpandingCell(this.type, {Key? key}) : super(key: key);
 
-  // final double smallPercent = 0.1;
   final double smallSize = 70;
   final double expandedHeightScale = 0.9;
   final double largeWidth = 1;
@@ -18,21 +18,7 @@ class HomePageExpandingCell extends StatelessWidget {
   final PageType type;
 
   _goToPage(BuildContext context, PageType type) {
-    PageConfig selectedConfig;
-    switch (type) {
-      case PageType.coding:
-        selectedConfig = codingPageConfig;
-        break;
-      case PageType.about:
-        selectedConfig = aboutPageConfig;
-        break;
-      case PageType.music:
-        selectedConfig = musicPageConfig;
-        break;
-      case PageType.contact:
-        selectedConfig = contactPageConfig;
-        break;
-    }
+    PageConfig selectedConfig = getPageConfig(type);
 
     Provider.of<HomePageViewModel>(context, listen: false).selectedPage = type;
     Provider.of<NavState>(context, listen: false).goTo(selectedConfig);
@@ -90,54 +76,49 @@ class HomePageExpandingCell extends StatelessWidget {
             child: Material(
               child: Container(
                 color: type.getPageColor(),
-                child: AnimatedPadding(
+                child: AnimatedAlign(
                   duration: HomePageViewModel.animDuration,
                   curve: HomePageViewModel.curve,
-                  padding: EdgeInsets.only(top: typeSelected ? 16 : 0),
-                  child: AnimatedAlign(
+                  alignment: _getAligment(typeSelected),
+                  child: AnimatedSwitcher(
                     duration: HomePageViewModel.animDuration,
-                    curve: HomePageViewModel.curve,
-                    alignment: _getAligment(typeSelected),
-                    child: AnimatedSwitcher(
-                      duration: HomePageViewModel.animDuration,
-                      switchInCurve: HomePageViewModel.curve,
-                      switchOutCurve: HomePageViewModel.curve,
-                      child: typeSelected
-                          ? AnimatedOpacity(
+                    switchInCurve: HomePageViewModel.curve,
+                    switchOutCurve: HomePageViewModel.curve,
+                    child: typeSelected
+                        ? AnimatedOpacity(
+                            duration: HomePageViewModel.animDuration,
+                            curve: HomePageViewModel.curve,
+                            opacity: typeSelected ? 1.0 : 0,
+                            child: AnimatedContainer(
                               duration: HomePageViewModel.animDuration,
                               curve: HomePageViewModel.curve,
-                              opacity: typeSelected ? 1.0 : 0,
-                              child: AnimatedContainer(
-                                duration: HomePageViewModel.animDuration,
-                                curve: HomePageViewModel.curve,
-                                height: typeSelected ? size.height : 0,
-                                child: type.getPageWidget(),
-                              ),
-                            )
-                          : FittedBox(
-                              child: Padding(
-                                padding: const EdgeInsets.all(16),
-                                child: Column(
-                                  children: [
-                                    FaIcon(
-                                      type.getIcon(),
-                                      size: 50,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 16),
-                                      child: Text(
-                                        type.getName(),
-                                        style: TextStyle(
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.w600,
-                                        ),
+                              height: typeSelected ? size.height : 0,
+                              child: type.getPageWidget(),
+                            ),
+                          )
+                        : FittedBox(
+                            child: Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: Column(
+                                children: [
+                                  FaIcon(
+                                    type.getIcon(),
+                                    size: 50,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 16),
+                                    child: Text(
+                                      type.getName(),
+                                      style: const TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.w600,
                                       ),
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ),
-                    ),
+                          ),
                   ),
                 ),
               ),

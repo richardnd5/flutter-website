@@ -1,5 +1,5 @@
 name: flutter_website
-description: A new Flutter project.
+description: My Website.
 publish_to: 'none'
 version: 1.0.0+1
 environment:
@@ -16,9 +16,11 @@ dependencies:
   flutter_svg: ^1.0.0
   flame: ^1.0.0
   google_fonts:
+  video_player: ^2.2.16
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_lints:
 flutter:
   uses-material-design: true
   assets:
