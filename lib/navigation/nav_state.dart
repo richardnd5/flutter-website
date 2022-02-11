@@ -3,7 +3,7 @@ import 'package:flutter_website/navigation/page_configs.dart';
 
 export 'package:flutter_website/navigation/page_configs.dart';
 
-enum CustomPages { home, pixel, gameOfLife, ticTacToe }
+enum CustomPages { home, pixel, gameOfLife, ticTacToe, pendulum }
 
 class NavState extends ChangeNotifier {
   NavState();
@@ -11,6 +11,7 @@ class NavState extends ChangeNotifier {
   List<PageConfig> pixelPages = [homePageConfig, pixelPageConfig];
   List<PageConfig> gameOfLifePages = [homePageConfig, gameOfLifePageConfig];
   List<PageConfig> ticTacToePages = [homePageConfig, ticTacToePageConfig];
+  List<PageConfig> pendulumPages = [homePageConfig, pendulumPageConfig];
 
   bool showPixel = false;
 
@@ -26,6 +27,8 @@ class NavState extends ChangeNotifier {
         return gameOfLifePages.map((e) => e.page).toList();
       case CustomPages.ticTacToe:
         return ticTacToePages.map((e) => e.page).toList();
+      case CustomPages.pendulum:
+        return pendulumPages.map((e) => e.page).toList();
     }
   }
 
@@ -41,6 +44,8 @@ class NavState extends ChangeNotifier {
       selectedPage = CustomPages.gameOfLife;
     } else if (config == ticTacToePageConfig) {
       selectedPage = CustomPages.ticTacToe;
+    } else if (config == pendulumPageConfig) {
+      selectedPage = CustomPages.pendulum;
     } else {
       selectedPage = CustomPages.home;
     }
