@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_website/gameOfLife/views/pages/game_of_life_page.dart';
 import 'package:flutter_website/navigation/fade_page.dart';
 import 'package:flutter_website/pixel/views/pages/pixel_page.dart';
+import 'package:flutter_website/polarPlay/polar_play_page.dart';
 import 'package:flutter_website/ticTacToe/ui/tic_tac_toe_page.dart';
 import 'package:flutter_website/views/pages/about/about_page.dart';
 import 'package:flutter_website/views/pages/coding/coding_page.dart';
@@ -55,6 +56,12 @@ final ticTacToePageConfig = PageConfig(
   path: '/ticTicToe',
   page: const FadePage(
     child: TicTacToePage(),
+  ),
+);
+final pendulumPageConfig = PageConfig(
+  path: '/pendulum',
+  page: const FadePage(
+    child: PolarPlayPage(),
   ),
 );
 final unknownPageConfig = PageConfig(

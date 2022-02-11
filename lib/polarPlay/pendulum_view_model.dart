@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
-import 'dart:math';
 import 'dart:async';
+import 'dart:math';
+
+import 'package:flutter/material.dart';
 
 class PendulumViewModel extends ChangeNotifier {
   Size size;
@@ -10,6 +11,8 @@ class PendulumViewModel extends ChangeNotifier {
   late Offset origin;
   late double length;
   late Offset bob;
+
+  bool running = false;
 
   double aVel = 0.0;
   double aAcc = 0.0;
@@ -36,18 +39,21 @@ class PendulumViewModel extends ChangeNotifier {
   }
 
   startTimer() {
-    timer = Timer.periodic(Duration(milliseconds: 17), (timer) {
+    timer = Timer.periodic(const Duration(milliseconds: 17), (timer) {
       aAcc = -0.01 * sin(angle);
       angle += aVel;
       aVel += aAcc;
       aVel *= 0.99;
 
       setBobPos();
+      running = true;
       notifyListeners();
     });
   }
 
   stopTimer() {
     timer?.cancel();
+    running = false;
+    notifyListeners();
   }
 }

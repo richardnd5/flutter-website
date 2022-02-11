@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_website/polarPlay/pendulum_view_model.dart';
 import 'package:flutter_website/polarPlay/polar_play_view_model.dart';
-import 'dart:math';
-
+import 'package:flutter_website/views/helpers/page_gradient.dart';
 import 'package:provider/provider.dart';
 
 class PolarPlayPage extends StatelessWidget {
@@ -17,9 +16,11 @@ class PolarPlayPage extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => PendulumViewModel(size)),
       ],
       builder: (context, builder) {
-        return SafeArea(
-          child: Scaffold(
-            body: Stack(
+        var vm = Provider.of<PendulumViewModel>(context, listen: false);
+        return Scaffold(
+          body: Container(
+            decoration: pageGradient(Colors.purple, Colors.pink),
+            child: Stack(
               children: [
                 CustomPaint(
                   size: size,
@@ -28,25 +29,27 @@ class PolarPlayPage extends StatelessWidget {
                   ),
                 ),
                 Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const SizedBox(width: 16),
-                      ElevatedButton(
-                        onPressed: () => Provider.of<PendulumViewModel>(context,
-                                listen: false)
-                            .startTimer(),
-                        child: Text('Start'),
-                      ),
-                      const SizedBox(width: 16),
-                      ElevatedButton(
-                        onPressed: () => Provider.of<PendulumViewModel>(context,
-                                listen: false)
-                            .stopTimer(),
-                        child: Text('Stop'),
-                      ),
-                    ],
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 64),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const SizedBox(width: 16),
+                        ElevatedButton(
+                          onPressed: vm.running
+                              ? Provider.of<PendulumViewModel>(context,
+                                      listen: false)
+                                  .stopTimer
+                              : Provider.of<PendulumViewModel>(context,
+                                      listen: false)
+                                  .startTimer,
+                          style: ElevatedButton.styleFrom(
+                              primary: vm.running ? Colors.red : Colors.green),
+                          child: Text(vm.running ? 'Stop' : 'Start'),
+                        ),
+                      ],
+                    ),
                   ),
                 )
               ],

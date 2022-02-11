@@ -35,6 +35,11 @@ final ticTacToe = WebLinkOption(
   asset: 'assets/images/ticTacToe.png',
   label: "TicTacToe",
 );
+final pendulum = WebLinkOption(
+  url: '',
+  asset: 'assets/images/pendulum.png',
+  label: "Pendulum",
+);
 
 final optionList = [
   sStories,
@@ -43,6 +48,7 @@ final optionList = [
   ticTacToe,
   pixel,
   gameOfLife,
+  pendulum
 ];
 
 class CodingPage extends StatefulWidget {
@@ -85,6 +91,9 @@ class _CodingPageState extends State<CodingPage> {
               } else if (optionList[index] == ticTacToe) {
                 Provider.of<NavState>(context, listen: false)
                     .goTo(ticTacToePageConfig);
+              } else if (optionList[index] == pendulum) {
+                Provider.of<NavState>(context, listen: false)
+                    .goTo(pendulumPageConfig);
               } else {
                 launchURL(optionList[index].url);
               }
