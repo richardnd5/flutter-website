@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_website/navigation/nav_router_delegate.dart';
 import 'package:flutter_website/navigation/page_configs.dart';
-import 'package:flutter_website/views/pages/coding/coding_page.dart';
+
 export 'package:flutter_website/navigation/page_configs.dart';
 
-enum CustomPages { home, pixel, gameOfLife }
+enum CustomPages { home, pixel, gameOfLife, ticTacToe }
 
 class NavState extends ChangeNotifier {
   NavState();
   List<PageConfig> pages = [homePageConfig];
   List<PageConfig> pixelPages = [homePageConfig, pixelPageConfig];
   List<PageConfig> gameOfLifePages = [homePageConfig, gameOfLifePageConfig];
+  List<PageConfig> ticTacToePages = [homePageConfig, ticTacToePageConfig];
 
   bool showPixel = false;
 
@@ -24,6 +24,8 @@ class NavState extends ChangeNotifier {
         return pixelPages.map((e) => e.page).toList();
       case CustomPages.gameOfLife:
         return gameOfLifePages.map((e) => e.page).toList();
+      case CustomPages.ticTacToe:
+        return ticTacToePages.map((e) => e.page).toList();
     }
   }
 
@@ -37,6 +39,8 @@ class NavState extends ChangeNotifier {
       selectedPage = CustomPages.pixel;
     } else if (config == gameOfLifePageConfig) {
       selectedPage = CustomPages.gameOfLife;
+    } else if (config == ticTacToePageConfig) {
+      selectedPage = CustomPages.ticTacToe;
     } else {
       selectedPage = CustomPages.home;
     }

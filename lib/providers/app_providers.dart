@@ -1,11 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_website/app.dart';
 import 'package:flutter_website/gameOfLife/services/game_of_life_service.dart';
 import 'package:flutter_website/navigation/nav_route_parser.dart';
 import 'package:flutter_website/navigation/nav_router_delegate.dart';
 import 'package:flutter_website/navigation/nav_state.dart';
 import 'package:flutter_website/pixel/services/canvas_service.dart';
 import 'package:flutter_website/pixel/services/sound_service.dart';
+import 'package:flutter_website/ticTacToe/service/tic_tac_toe_service.dart';
 import 'package:flutter_website/views/pages/home/home_page_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -45,4 +44,5 @@ final appProviders = [
     create: (context) => GameOfLifeService(),
     lazy: false,
   ),
+  ChangeNotifierProvider(create: (_) => TicTacToeService()),
 ];

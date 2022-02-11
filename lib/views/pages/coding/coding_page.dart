@@ -30,11 +30,17 @@ final gameOfLife = WebLinkOption(
   asset: 'assets/images/pixel.png',
   label: "Game of Life",
 );
+final ticTacToe = WebLinkOption(
+  url: '',
+  asset: 'assets/images/ticTacToe.png',
+  label: "TicTacToe",
+);
 
 final optionList = [
   sStories,
   csa,
   gitHub,
+  ticTacToe,
   pixel,
   gameOfLife,
 ];
@@ -54,6 +60,7 @@ class _CodingPageState extends State<CodingPage> {
     return 5;
   }
 
+  @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Padding(
@@ -75,6 +82,9 @@ class _CodingPageState extends State<CodingPage> {
               } else if (optionList[index] == gameOfLife) {
                 Provider.of<NavState>(context, listen: false)
                     .goTo(gameOfLifePageConfig);
+              } else if (optionList[index] == ticTacToe) {
+                Provider.of<NavState>(context, listen: false)
+                    .goTo(ticTacToePageConfig);
               } else {
                 launchURL(optionList[index].url);
               }

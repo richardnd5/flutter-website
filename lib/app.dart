@@ -3,12 +3,9 @@
 import 'dart:html';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_website/gameOfLife/views/pages/game_of_life_page.dart';
 import 'package:flutter_website/navigation/nav_router_delegate.dart';
-import 'package:flutter_website/pixel/views/pages/pixel_page.dart';
-import 'package:flutter_website/polarPlay/polar_play_page.dart';
-import 'package:flutter_website/stubs/web_stubs.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'navigation/nav_route_parser.dart';
 
 class App extends StatefulWidget {
