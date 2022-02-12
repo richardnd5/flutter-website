@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_website/gameOfLife/helpers/closed_range.dart';
 import 'package:flutter_website/gameOfLife/helpers/rescale.dart';
@@ -11,16 +12,16 @@ class GameOfLifeService extends ChangeNotifier {
   int _generationCount = 0;
 
   int get columns => _columns;
-  int _columns = 15;
+  final int _columns = 50;
 
   int get rows => _rows;
-  int _rows = 15;
+  final int _rows = 50;
 
   Timer? _timer;
   int timerValue = 300;
 
   ClosedRange get sliderRange => _sliderRange;
-  ClosedRange _sliderRange = ClosedRange(0, 500);
+  final ClosedRange _sliderRange = ClosedRange(0, 500);
 
   double get sliderValue => _sliderValue;
   double _sliderValue = 400.0;
