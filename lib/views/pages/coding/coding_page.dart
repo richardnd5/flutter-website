@@ -45,6 +45,11 @@ final melody = WebLinkOption(
   asset: 'assets/images/blankImage.png',
   label: "Melody",
 );
+final sequencer = WebLinkOption(
+  url: 'https://nrichardwebsite.web.app/sequencerPage',
+  asset: 'assets/images/blankImage.png',
+  label: "Sequencer",
+);
 
 final optionList = [
   sStories,
@@ -55,6 +60,7 @@ final optionList = [
   gameOfLife,
   pendulum,
   melody,
+  sequencer,
 ];
 
 class CodingPage extends StatefulWidget {
