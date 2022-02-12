@@ -27,7 +27,7 @@ final pixel = WebLinkOption(
 );
 final gameOfLife = WebLinkOption(
   url: '',
-  asset: 'assets/images/pixel.png',
+  asset: 'assets/images/gameOfLife.png',
   label: "Game of Life",
 );
 final ticTacToe = WebLinkOption(

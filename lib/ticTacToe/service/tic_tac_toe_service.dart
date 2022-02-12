@@ -50,6 +50,7 @@ class TicTacToeService extends ChangeNotifier {
     if (stateHistory.length > 1) {
       stateHistory.removeLast();
       gameCells = stateHistory.last;
+      currentPlayer = currentPlayer == 0 ? 1 : 0;
       notifyListeners();
     } else {
       restartGame();

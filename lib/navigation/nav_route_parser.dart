@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_website/navigation/nav_state.dart';
 import 'package:flutter_website/views/pages/home/home_page_view_model.dart';
@@ -12,44 +11,7 @@ class NavRouteParser extends RouteInformationParser<PageConfig> {
   NavRouteParser(this.state, this.vm);
   @override
   Future<PageConfig> parseRouteInformation(RouteInformation routeInformation) {
-    Uri? uri = Uri.tryParse(routeInformation.location ?? '');
-
-    if (uri?.pathSegments.isEmpty == true) {
-      state.showPixel = false;
-      if (vm.selectedPage != null) {
-        vm.selectedPage = null;
-      }
-      return SynchronousFuture(homePageConfig);
-    }
-    if (uri?.pathSegments.length == 1) {
-      state.pop();
-
-      if (uri?.pathSegments[0].contains('pixel') == true) {
-        state.selectedPage = CustomPages.pixel;
-        return SynchronousFuture(pixelPageConfig);
-      }
-      if (uri?.pathSegments[0].contains('gameOfLife') == true) {
-        state.selectedPage = CustomPages.gameOfLife;
-        return SynchronousFuture(gameOfLifePageConfig);
-      }
-      if (uri?.pathSegments[0].contains('music') == true) {
-        vm.selectedPage = PageType.music;
-        return SynchronousFuture(musicPageConfig);
-      }
-      if (uri?.pathSegments[0].contains('contact') == true) {
-        vm.selectedPage = PageType.contact;
-        return SynchronousFuture(contactPageConfig);
-      }
-      if (uri?.pathSegments[0].contains('coding') == true) {
-        vm.selectedPage = PageType.coding;
-        return SynchronousFuture(codingPageConfig);
-      }
-      if (uri?.pathSegments[0].contains('about') == true) {
-        vm.selectedPage = PageType.about;
-        return SynchronousFuture(aboutPageConfig);
-      }
-    }
-    return SynchronousFuture(unknownPageConfig);
+    return setPageConfig(vm, state, routeInformation);
   }
 
   @override

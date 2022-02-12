@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
-class FadePage extends Page {
+class FadeTransitionPage extends Page {
   final Widget? child;
 
-  const FadePage({Key? key, this.child}) : super(key: key as LocalKey?);
+  const FadeTransitionPage({Key? key, this.child})
+      : super(key: key as LocalKey?);
   @override
   Route createRoute(BuildContext context) {
     return PageRouteBuilder(

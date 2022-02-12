@@ -6,14 +6,11 @@ export 'package:flutter_website/navigation/page_configs.dart';
 enum CustomPages { home, pixel, gameOfLife, ticTacToe, pendulum }
 
 class NavState extends ChangeNotifier {
-  NavState();
   List<PageConfig> pages = [homePageConfig];
   List<PageConfig> pixelPages = [homePageConfig, pixelPageConfig];
   List<PageConfig> gameOfLifePages = [homePageConfig, gameOfLifePageConfig];
   List<PageConfig> ticTacToePages = [homePageConfig, ticTacToePageConfig];
   List<PageConfig> pendulumPages = [homePageConfig, pendulumPageConfig];
-
-  bool showPixel = false;
 
   CustomPages selectedPage = CustomPages.home;
 

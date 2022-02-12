@@ -11,9 +11,7 @@ class NavRouterDelegate extends RouterDelegate<PageConfig>
   PageConfig? get currentConfiguration => state.pages.last;
 
   NavRouterDelegate(this.state) {
-    state.addListener(() {
-      notifyListeners();
-    });
+    state.addListener(notifyListeners);
   }
 
   @override
