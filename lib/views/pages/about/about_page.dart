@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_website/views/pages/home/home_page_view_model.dart';
 import 'package:flutter_website/views/components/inner_page_container.dart';
+import 'package:flutter_website/views/pages/home/home_page_view_model.dart';
 import 'package:provider/src/provider.dart';
 
 class AboutPage extends StatefulWidget {
@@ -20,13 +20,27 @@ class _AboutPageState extends State<AboutPage> {
         padding: const EdgeInsets.all(32),
         child: ListView(
           children: [
-            // if (context.watch<HomePageViewModel>().selectedPage ==
-            //     PageType.about)
             FadeInOnInitWidget(
-              child: Text(
-                'Welcome! This website is an experiment with new navigation patterns for the web. It is built in Flutter.',
-                style: Theme.of(context).textTheme.headline4,
-                textAlign: TextAlign.center,
+              child: Column(
+                children: [
+                  Text(
+                    'Welcome to my website!',
+                    style: Theme.of(context).textTheme.headline3,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    "It is an experiment with new navigation patterns for the web. It's built in Flutter.",
+                    style: Theme.of(context).textTheme.headline6,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    "It holds a few small Flutter apps I have built recently, some older iOS apps I have put on the AppStore, as well as a few music projects I've done over the years.",
+                    style: Theme.of(context).textTheme.headline6,
+                    textAlign: TextAlign.center,
+                  ),
+                ],
               ),
               isVisible: context.watch<HomePageViewModel>().selectedPage ==
                   PageType.about,

@@ -76,15 +76,19 @@ class _GameOfLifePageState extends State<GameOfLifePage> {
       child: Scaffold(
         appBar: AppBar(
           leading: Container(),
-          toolbarHeight: 80,
           title: const Text("Epic Conway's Game of Life"),
         ),
         body: SingleChildScrollView(
           child: Column(
             children: [
-              _buildPainter(painterSize!, grid),
               _buildOptionsSection(
-                  generationCount, context, timerValue, sliderValue),
+                generationCount,
+                context,
+                timerValue,
+                sliderValue,
+              ),
+              _buildPainter(painterSize!, grid),
+              _buildSliderSection(timerValue, sliderValue)
             ],
           ),
         ),
@@ -115,6 +119,39 @@ class _GameOfLifePageState extends State<GameOfLifePage> {
     );
   }
 
+  Widget _buildSliderSection(
+    int timerValue,
+    double sliderValue,
+  ) {
+    var watched = context.watch<GameOfLifeService>();
+    var sliderRange = watched.sliderRange;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 12),
+        ),
+        Slider(
+          min: sliderRange.lowerBound,
+          max: sliderRange.upperBound,
+          value: sliderValue,
+          onChanged: game?.handleSlider,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 16),
+          child: SizedBox(
+            width: double.infinity,
+            child: Text(
+              '$timerValue ms per generation',
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.caption,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget _buildOptionsSection(
     int generationCount,
     BuildContext context,
@@ -122,67 +159,17 @@ class _GameOfLifePageState extends State<GameOfLifePage> {
     double sliderValue,
   ) {
     var watched = context.watch<GameOfLifeService>();
-    var sliderRange = watched.sliderRange;
     return Padding(
       padding: const EdgeInsets.all(8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12),
-          ),
-          Slider(
-            min: sliderRange.lowerBound,
-            max: sliderRange.upperBound,
-            value: sliderValue,
-            onChanged: game?.handleSlider,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 16),
-            child: SizedBox(
-              width: double.infinity,
-              child: Text(
-                '$timerValue ms per generation',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.caption,
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: 32,
-                  child: Text(
-                    'Generation: ',
-                    style: Theme.of(context).textTheme.headline5,
-                  ),
-                ),
-                Container(
-                  height: 32,
-                  alignment: Alignment.center,
-                  child: Text(
-                    '$generationCount',
-                    overflow: TextOverflow.fade,
-                  ),
-                ),
-              ],
-            ),
-          ),
           const SizedBox(height: 8),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ElevatedButton(
-                  onPressed: game?.createRandomGrid,
-                  child: const Icon(Icons.restore),
-                  style: ElevatedButton.styleFrom(primary: Colors.green),
-                ),
-                const SizedBox(width: 16),
                 Text(
                   'Run',
                   style: Theme.of(context).textTheme.headline6,
@@ -202,6 +189,28 @@ class _GameOfLifePageState extends State<GameOfLifePage> {
                     minimumSize: const Size(32, 32),
                     maximumSize: const Size(32, 32),
                     primary: Colors.lightBlueAccent,
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Text(
+                  'Generation: ',
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+                SizedBox(
+                  width: 100,
+                  child: Text(
+                    '$generationCount',
+                    overflow: TextOverflow.fade,
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: game?.createRandomGrid,
+                  child: const Icon(Icons.restore),
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                    primary: Colors.green,
+                    minimumSize: const Size(32, 32),
+                    maximumSize: const Size(32, 32),
                   ),
                 ),
               ],
