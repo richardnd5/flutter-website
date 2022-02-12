@@ -40,6 +40,11 @@ final pendulum = WebLinkOption(
   asset: 'assets/images/pendulum.png',
   label: "Pendulum",
 );
+final melody = WebLinkOption(
+  url: 'https://chains-722f5.web.app',
+  asset: 'assets/images/blankImage.png',
+  label: "Melody",
+);
 
 final optionList = [
   sStories,
@@ -48,7 +53,8 @@ final optionList = [
   ticTacToe,
   pixel,
   gameOfLife,
-  pendulum
+  pendulum,
+  melody,
 ];
 
 class CodingPage extends StatefulWidget {
