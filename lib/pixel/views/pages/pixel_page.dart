@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_website/pixel/services/canvas_service.dart';
-import 'package:flutter_website/pixel/views/functions/show_snack_bar.dart';
 import 'package:flutter_website/pixel/views/components/two_finger_interactive_viewer.dart'
     as viewer;
+import 'package:flutter_website/pixel/views/functions/show_snack_bar.dart';
 import 'package:flutter_website/pixel/views/pages/components/pixel_button.dart';
 import 'package:flutter_website/pixel/views/pages/components/pixel_drawer.dart';
 import 'package:provider/provider.dart';
+
 import '../components/my_painter.dart';
 
 class PixelPage extends StatefulWidget {
@@ -61,14 +62,14 @@ class _PixelPageState extends State<PixelPage> {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: Text('Are you sure you want to clear the animation?'),
+        title: const Text('Are you sure you want to clear the animation?'),
         actions: [
           TextButton(
-            child: Text('No'),
+            child: const Text('No'),
             onPressed: () => Navigator.pop(context),
           ),
           TextButton(
-            child: Text('Yes'),
+            child: const Text('Yes'),
             onPressed: () {
               canvas.clearAnimation();
               showSnackBar(context, 'Animation Cleared');
@@ -114,7 +115,7 @@ class _PixelPageState extends State<PixelPage> {
       child: SafeArea(
         child: Scaffold(
           drawerEnableOpenDragGesture: false,
-          drawer: PixelDrawer(),
+          drawer: const PixelDrawer(),
           appBar: AppBar(),
           floatingActionButton: _buildFloatingActionSection(),
           persistentFooterButtons: [
@@ -149,11 +150,11 @@ class _PixelPageState extends State<PixelPage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        SizedBox(width: 32),
+        const SizedBox(width: 32),
         _buildBackButton(),
-        SizedBox(width: 8),
+        const SizedBox(width: 8),
         _buildForwardButton(),
-        Spacer(),
+        const Spacer(),
         _buildNewFrameButton(),
       ],
     );
@@ -167,7 +168,7 @@ class _PixelPageState extends State<PixelPage> {
           child: Row(
             children: [
               _buildLockButton(),
-              SizedBox(width: 8),
+              const SizedBox(width: 8),
               _buildClearButton(),
             ],
           ),
@@ -179,9 +180,9 @@ class _PixelPageState extends State<PixelPage> {
   Widget _buildNewFrameButton() {
     var canvasSaved = context.watch<CanvasService>().canvasSaved;
     return PixelButton(
-      minSize: Size(100, 42),
+      minSize: const Size(100, 42),
       onPressed: canvasSaved ? null : _handleNewFramePressed,
-      child: Icon(Icons.create_rounded),
+      child: const Icon(Icons.create_rounded),
     );
   }
 
@@ -190,7 +191,7 @@ class _PixelPageState extends State<PixelPage> {
     return PixelButton(
       backgroundColor: service.lastIndex ? null : Colors.blue,
       onPressed: service.lastIndex ? null : () => canvas.goForwardAFrame(),
-      child: Icon(Icons.arrow_right_rounded),
+      child: const Icon(Icons.arrow_right_rounded),
     );
   }
 
@@ -198,7 +199,7 @@ class _PixelPageState extends State<PixelPage> {
     return PixelButton(
       backgroundColor: canvas.firstIndex ? null : Colors.blue,
       onPressed: canvas.firstIndex ? null : () => canvas.goBackAFrame(),
-      child: Icon(Icons.arrow_left_rounded),
+      child: const Icon(Icons.arrow_left_rounded),
     );
   }
 
@@ -207,7 +208,7 @@ class _PixelPageState extends State<PixelPage> {
       backgroundColor:
           canvas.safetyLocked ? Colors.blueGrey : Colors.transparent,
       onPressed: () => canvas.safetyLocked = !canvas.safetyLocked,
-      child: Icon(Icons.lock),
+      child: const Icon(Icons.lock),
     );
   }
 
@@ -215,7 +216,7 @@ class _PixelPageState extends State<PixelPage> {
     return PixelButton(
       backgroundColor: !canvas.safetyLocked ? Colors.red : null,
       onPressed: !canvas.safetyLocked ? clearCanvasPressed : null,
-      child: Icon(Icons.delete),
+      child: const Icon(Icons.delete),
     );
   }
 
@@ -223,17 +224,21 @@ class _PixelPageState extends State<PixelPage> {
     return PixelButton(
       backgroundColor: Colors.green,
       onPressed: playPressed,
-      child: Icon(Icons.play_arrow),
+      child: const Icon(Icons.play_arrow),
     );
   }
 
   Widget _buildToggleGridButton() {
     return PixelButton(
-      backgroundColor: context.watch<CanvasService>().grid
-          ? Colors.white10
-          : Colors.lightBlue,
+      backgroundColor:
+          context.watch<CanvasService>().grid ? Colors.white : Colors.lightBlue,
       onPressed: canvas.toggleGrid,
-      child: Icon(Icons.grid_4x4),
+      child: Icon(
+        Icons.grid_4x4,
+        color: context.watch<CanvasService>().grid
+            ? Colors.lightBlue
+            : Colors.white,
+      ),
     );
   }
 }
