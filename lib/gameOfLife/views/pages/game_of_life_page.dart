@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_website/gameOfLife/services/game_of_life_service.dart';
-import 'package:flutter_website/pixel/views/components/two_finger_interactive_viewer.dart';
 import 'package:flutter_website/views/helpers/page_gradient.dart';
 import 'package:provider/provider.dart';
+
 import '../components/game_of_life_painter.dart';
 
 class GameOfLifePage extends StatefulWidget {
@@ -77,42 +77,7 @@ class _GameOfLifePageState extends State<GameOfLifePage> {
         appBar: AppBar(
           leading: Container(),
           toolbarHeight: 80,
-          title: Column(
-            children: [
-              Text("Epic Conway's Game of Life"),
-              SizedBox(height: 4),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Run',
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline6
-                        ?.copyWith(color: Colors.white),
-                  ),
-                  Switch(
-                    value: watched.simulationOn,
-                    onChanged: game?.handleToggle,
-                  ),
-                  ElevatedButton(
-                    onPressed: watched.simulationOn
-                        ? null
-                        : () => game?.setNextState(),
-                    child: Icon(
-                      Icons.next_plan,
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.zero,
-                      minimumSize: Size(32, 32),
-                      maximumSize: Size(32, 32),
-                      primary: Colors.lightBlueAccent,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
+          title: const Text("Epic Conway's Game of Life"),
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -163,8 +128,8 @@ class _GameOfLifePageState extends State<GameOfLifePage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12),
           ),
           Slider(
             min: sliderRange.lowerBound,
@@ -173,7 +138,7 @@ class _GameOfLifePageState extends State<GameOfLifePage> {
             onChanged: game?.handleSlider,
           ),
           Padding(
-            padding: EdgeInsets.only(bottom: 16),
+            padding: const EdgeInsets.only(bottom: 16),
             child: SizedBox(
               width: double.infinity,
               child: Text(
@@ -207,15 +172,37 @@ class _GameOfLifePageState extends State<GameOfLifePage> {
               ],
             ),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
             child: Row(
               children: [
                 ElevatedButton(
                   onPressed: game?.createRandomGrid,
-                  child: Icon(Icons.restore),
+                  child: const Icon(Icons.restore),
                   style: ElevatedButton.styleFrom(primary: Colors.green),
+                ),
+                const SizedBox(width: 16),
+                Text(
+                  'Run',
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+                Switch(
+                  value: watched.simulationOn,
+                  onChanged: game?.handleToggle,
+                ),
+                ElevatedButton(
+                  onPressed:
+                      watched.simulationOn ? null : () => game?.setNextState(),
+                  child: const Icon(
+                    Icons.next_plan,
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                    minimumSize: const Size(32, 32),
+                    maximumSize: const Size(32, 32),
+                    primary: Colors.lightBlueAccent,
+                  ),
                 ),
               ],
             ),
