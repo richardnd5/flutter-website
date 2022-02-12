@@ -205,10 +205,12 @@ class _PixelPageState extends State<PixelPage> {
 
   Widget _buildLockButton() {
     return PixelButton(
-      backgroundColor:
-          canvas.safetyLocked ? Colors.blueGrey : Colors.transparent,
+      backgroundColor: canvas.safetyLocked ? Colors.blueGrey : Colors.white,
       onPressed: () => canvas.safetyLocked = !canvas.safetyLocked,
-      child: const Icon(Icons.lock),
+      child: Icon(
+        Icons.lock,
+        color: canvas.safetyLocked ? Colors.white : Colors.blueGrey,
+      ),
     );
   }
 
